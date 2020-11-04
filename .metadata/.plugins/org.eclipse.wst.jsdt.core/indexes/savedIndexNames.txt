@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+/Users/dabin/gajimarket/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+3707983396.index
+972934356.index
+35379058.index
+3204424277.index
+3788148773.index
+2932457153.index
+3411728344.index

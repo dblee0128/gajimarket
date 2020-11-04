@@ -1,0 +1,27 @@
+package com.market.gaji.reply.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.market.gaji.reply.domain.ReplyVO;
+import com.market.gaji.reply.service.ReplyService;
+
+@RestController
+@RequestMapping("/reply/")
+public class ReplyController {
+	
+	@Autowired
+	private ReplyService replyService;
+	
+	// 댓글 등록
+	@RequestMapping(value="/new", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> registerReply(@RequestBody ReplyVO replyvo) {
+		
+		replyService.registerReply(replyvo);
+	}
+
+}

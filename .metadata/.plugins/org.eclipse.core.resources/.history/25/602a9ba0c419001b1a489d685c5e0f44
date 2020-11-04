@@ -1,0 +1,12 @@
+package com.market.gaji.board.service;
+
+import java.util.List;
+
+import com.market.gaji.board.domain.BoardVO;
+
+public interface BoardService {
+	
+	// 전체 게시물 조회 - 주소 기준
+	public List<BoardVO> getListBoard();
+
+}

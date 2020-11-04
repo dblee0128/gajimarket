@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+body {
+	background-color: #fafafa;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+#wrap {
+	width: 1000px;
+	border-color: #d3d3d3;
+	border-width: 1px;
+}
+
+#board_tb {
+	width: 80%;
+	text-align: center;
+}
+

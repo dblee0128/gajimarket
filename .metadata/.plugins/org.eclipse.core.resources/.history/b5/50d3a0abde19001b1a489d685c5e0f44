@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+body {
+	background-color: #fafafa;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+#wrap {
+	width: 800px;
+	margin: 0 auto;
+	border-color: #d3d3d3;
+	border-width: 1px;
+}
+
+#board_tb {
+	width: 100%;
+	border-collapse: collapse;
+	line-height: 20px;
+	font-size: 12px;
+	text-align: center;
+}
+
+#board_tb tr th {
+	border: #d3d3d3 solid 1px;
+	padding: 5px;
+}
+
+#board_tb th {
+	background: #d3d3d3;
+	width: 120px;
+}
+
+
+.large {
+	width: 200px;
+}
+
+.medium {
+	width: 200px;
+}
+
+.small {
+	width: 100px;
+}
+
+#boardLink {
+	color: black;	
+}

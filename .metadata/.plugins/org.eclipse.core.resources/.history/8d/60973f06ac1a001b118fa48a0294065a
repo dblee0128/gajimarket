@@ -1,0 +1,23 @@
+package com.market.gaji.board.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.market.gaji.board.service.BoardService;
+
+@Controller
+@RequestMapping("/myInfo/board")
+public class MyInfoBoardController {
+	
+	@Autowired
+	private BoardService boardService;
+	
+	@RequestMapping(value="get")
+	public String getListMyBoard() {
+		return "myInfo/board/get";
+	}
+	
+	
+	
+}

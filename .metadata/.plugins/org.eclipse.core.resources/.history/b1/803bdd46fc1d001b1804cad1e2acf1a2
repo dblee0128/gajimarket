@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- DataSource 설정 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+		<property name="username" value="GAJIMARKET"/>
+		<property name="password" value="1234"/>
+	</bean>
+	
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"/>
+	</bean>
+	
+	<!-- Mybatis 설정 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:config/mapper-config.xml"/> <!-- Mybatis 환경설정 -->
+		<property name="mapperLocations" value="classpath:com/market/gaji/*/mapper/*.xml"/> <!-- Mybatis mapper 경로 -->
+	</bean>
+	
+	<!-- 트랜잭션 설정 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>	
+	</bean>
+	
+	
+	<mybatis-spring:scan base-package="com.market.gaji.member.mapper"/>
+	<mybatis-spring:scan base-package="com.market.gaji.board.mapper"/>
+	<mybatis-spring:scan base-package="com.market.gaji.reply.mapper"/>
+		
+</beans>

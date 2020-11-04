@@ -1,0 +1,5 @@
+package com.market.gaji.member.domain;
+
+public class AddressVO {
+
+}

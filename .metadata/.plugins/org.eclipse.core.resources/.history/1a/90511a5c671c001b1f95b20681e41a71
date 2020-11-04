@@ -1,0 +1,28 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>가지마켓</title>
+<link href="<c:url value="/resources/css/test.css"/>" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="wrap">
+
+	<div class="loginArea">
+		<img src="/resources/img/logo4.jpeg" class="logo">
+		
+	</div>
+	
+	
+	<div class="footerArea">
+		© 2020 GAJI MARKET. ALL RIGHTS RESERVED.
+	</div>
+	
+</div>
+</body>
+</html>

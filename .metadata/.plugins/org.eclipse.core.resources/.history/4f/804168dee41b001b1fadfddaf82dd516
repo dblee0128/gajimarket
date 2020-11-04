@@ -1,0 +1,47 @@
+package com.market.gaji.reply.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.market.gaji.reply.domain.ReplyVO;
+import com.market.gaji.reply.mapper.ReplyMapper;
+
+@Service
+public class ReplyServiceImpl implements ReplyService {
+	
+	@Autowired
+	private ReplyMapper replyMapper;
+
+	@Override
+	public void registerReply(ReplyVO reply) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ReplyVO getReply(int boardnum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteReply(int replynum) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ReplyVO modifyReply(ReplyVO reply) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ReplyVO> getListRelpy(int boardnum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}

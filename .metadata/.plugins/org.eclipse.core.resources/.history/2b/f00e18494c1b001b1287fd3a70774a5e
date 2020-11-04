@@ -1,0 +1,41 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<link href="<c:url value="/resources/css/includes.css"/>" rel="stylesheet">
+<style>
+.search {
+	width: 240px;
+	height: 30px;
+	color: black;
+	border-color: #d6d6d6;
+	border-style: solid;
+	border-width: 1px;
+	margin: 0 0 15px 0;
+}
+
+.searchBtn {
+	width: 50px;
+	height: 30px;
+	margin: 0 0 15px 0;
+}
+</style>
+<div id="menuArea">
+	<ul id="menu">
+		<li class="menu"><a href="/" id="top">가지마켓</a></li> <!-- 회원: /board(게시판 메인 페이지로 이동), 비회원: /(로그인 페이지로 이동) -->
+		<li class="menu"><input type="text" placeholder="검색" class="search">
+			<form action="/board" method="get">
+				<select name="type">
+					<option value="" <c:out value="${pageMaker.cri.type == null? 'selected':''}"/>>선택</option>
+					<option value="T" <c:out value="${pageMaker.cri.type eq 'T'? 'selected':''}"/>>제목</option>
+					<option value="C" <c:out value="${pageMaker.cri.type eq 'C'? 'selected':''}"/>>내용</option>
+					<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'? 'selected':''}"/>>제목/내용</option>
+				</select>			
+				<input type="text" name="keyword" value="${pageMaker.cri.keyword}">
+				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+				<button type="submit">검색</button>
+			</form>
+		<li class="menu"><a href="/myInfo" id="top">${nickname}</a></li> <!-- 내 정보 메인 페이지로 이동 -->
+		<li class="menu"><a href="/logout" id="top">로그아웃</a></li> <!-- 로그아웃 실행 -->
+	</ul>
+</div>
+<br>

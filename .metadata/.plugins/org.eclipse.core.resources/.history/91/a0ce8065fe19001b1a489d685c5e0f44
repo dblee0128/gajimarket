@@ -1,0 +1,30 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<link href="<c:url value="/resources/css/includes.css"/>" rel="stylesheet">
+<style>
+.search {
+	width: 240px;
+	height: 30px;
+	color: black;
+	border-color: #d6d6d6;
+	border-style: solid;
+	border-width: 1px;
+	margin: 0 0 15px 0;
+}
+
+.searchBtn {
+	width: 50px;
+	height: 30px;
+	margin: 0 0 15px 0;
+}
+</style>
+<div id="menuArea">
+	<ul>
+		<li><a href="/" id="top">가지마켓</a></li> <!-- 회원: /board(게시판 메인 페이지로 이동), 비회원: /(로그인 페이지로 이동) -->
+		<li><input type="text" placeholder="검색" class="search">
+			<input type="submit" value="검색" class="searchBtn"></li>
+		<li><a href="/myInfo" id="top">${session.nickname}</a></li> <!-- 내 정보 메인 페이지로 이동 -->
+		<li><a href="/logout" id="top">로그아웃</a></li> <!-- 로그아웃 실행 -->
+	</ul>
+</div>
+<br>

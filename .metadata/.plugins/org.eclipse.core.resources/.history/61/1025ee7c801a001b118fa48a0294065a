@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.market.gaji.member.mapper.MemberMapper">
+
+	<!-- 회원가입 -->
+	<insert id="registerMember" parameterType="MemberVO">
+		insert into tbl_member
+		(membernum, email, password, nickname, phone, addressnum)
+		values(member_seq.nextval, #{email}, #{password}, #{nickname}, #{phone}, #{addressnum})
+	</insert>
+	
+	<!-- 이메일로 한명의 회원조회 -->
+	<select id="getMember" parameterType="string" resultMap="member">
+		select * 
+		from tbl_member a join tbl_address b
+		on a.addressnum = b.addressnum
+		where email = #{email}
+	</select>
+	
+	<!-- 별명으로 한명의 회원조회 -->
+	<select id="getNicknameMember" parameterType="string" resultMap="member">
+		select * 
+		from tbl_member a join tbl_address b
+		on a.addressnum = b.addressnum
+		where nickname = #{nickname}
+	</select>
+	
+	<!-- 핸드폰 번호로 한명의 회원조회 -->
+	<select id="getPhoneMember" parameterType="string" resultMap="member">
+		select * 
+		from tbl_member a join tbl_address b
+		on a.addressnum = b.addressnum
+		where phone = #{phone}
+	</select>
+	
+	<select id="getMemberNumMember" parameterType="int" resultMap="member">
+		select * 
+		from tbl_member a join tbl_address b
+		on a.addressnum = b.addressnum
+		where membernum = #{membernum}
+	</select>
+	
+	<resultMap type="MemberVO" id="member">
+		<id column="membernum" property="membernum"/>
+		<result column="email" property="email"/>
+		<result column="password" property="password"/>
+		<result column="nickname" property="nickname"/>
+		<result column="phone" property="phone"/>
+		<result column="regdate" property="regdate"/>
+		<result column="addressnum" property="addressnum"/>
+		
+		<collection javaType="AddressVO" property="address">
+			<id column="addressnum" property="addressnum"/>
+			<result column="addressname" property="addressname"/>
+		</collection>
+	</resultMap>
+	
+	
+	<!-- 주소명 조회 
+	<select id="getAddressName" parameterType="int" resultType="string">
+		select addressname 
+		from tbl_address
+		where addressnum = #{addressnum}
+	</select> -->
+	
+	<!-- 회원탈퇴 -->
+	<delete id="deleteMember">
+		delete
+		from tbl_member 
+		where email = #{email} and password = #{password}
+	</delete>
+	
+	<!-- 회원정보수정 (핸드폰 번호, 주소) -->
+	<update id="modifyMember" parameterType="MemberVO">
+		update tbl_member
+		set phone = #{phone}, addressnum = #{addressnum}
+		where email = #{email}
+	</update>
+	
+	<!-- 회원정보수정 (비밀번호) -->
+	<update id="modifyPwMember">
+		update tbl_member
+		set password = #{password}
+		where email = #{email}
+	</update>
+	
+	
+</mapper>

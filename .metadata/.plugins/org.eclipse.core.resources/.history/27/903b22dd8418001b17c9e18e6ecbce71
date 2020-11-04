@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+body {
+	background-color: #fafafa;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+#wrap {
+	width: 1000px;
+	margin: 0 auto;
+	border-color: #d3d3d3;
+	border-width: 1px;
+}
+
+#board_tb {
+	width: 100%;
+	border-collapse: collapse;
+	line-height: 24px;
+	font-size: 12px;
+	text-align: center;
+}
+
+#board_tb td, th {
+	border: #d3d3d3 solid 1px;
+	padding: 5px;
+}
