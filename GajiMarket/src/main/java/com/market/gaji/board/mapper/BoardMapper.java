@@ -21,6 +21,9 @@ public interface BoardMapper {
 	// 게시물 등록
 	public void registerBoard(BoardVO board);
 	
+	// 게시물 등록 - selectKey
+	public void registerSelectKey(BoardVO board);
+	
 	// 게시물 삭제
 	public void deleteBoard(int boardnum);
 		

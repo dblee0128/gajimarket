@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.market.gaji.board.domain.BoardVO;
 import com.market.gaji.board.domain.Criteria;
+import com.market.gaji.board.domain.ImgVO;
 
 public interface BoardService {
 	
@@ -17,6 +18,9 @@ public interface BoardService {
 	
 	// 게시물 상세 조회
 	public BoardVO getDetailBoard(int boardnum);
+	
+	// 이미지 조회
+	public List<ImgVO> getImg(int boardnum);
 
 	// 게시물 등록
 	public void registerBoard(BoardVO board);

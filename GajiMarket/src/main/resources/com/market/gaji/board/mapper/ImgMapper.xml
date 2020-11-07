@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.market.gaji.board.mapper.ImgMapper">
+
+	<insert id="registerImg" parameterType="ImgVO">
+		insert into tbl_img (uuid, uploadpath, filename, boardnum)
+		values (#{uuid}, #{uploadpath}, #{filename}, #{boardnum})
+	</insert>
+	
+	<delete id="deleteImg" parameterType="string">
+		delete tbl_img
+		where uuid = #{uuid}
+	</delete>
+
+	<select id="getImg" resultType="ImgVO">
+		select * 
+		from tbl_img
+		where boardnum = #{boardnum}
+	</select>
+	
+	<delete id="deleteAllImg" parameterType="int">
+		delete tbl_img
+		where boardnum = #{boardnum}
+	</delete>
+	
+</mapper>

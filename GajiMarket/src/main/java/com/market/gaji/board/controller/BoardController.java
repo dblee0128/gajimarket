@@ -1,11 +1,17 @@
 package com.market.gaji.board.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,16 +19,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.market.gaji.board.domain.BoardVO;
 import com.market.gaji.board.domain.Criteria;
+import com.market.gaji.board.domain.ImgVO;
 import com.market.gaji.board.domain.PageDTO;
 import com.market.gaji.board.service.BoardService;
 import com.market.gaji.member.domain.MemberVO;
 import com.market.gaji.member.service.MemberService;
 
+import lombok.extern.log4j.Log4j;
+
 @Controller
 @RequestMapping("/board")
+@Log4j
 public class BoardController {
 	
 	@Autowired
@@ -121,6 +132,10 @@ public class BoardController {
 	public String registerBoard(@ModelAttribute("board") @Valid BoardVO board, 
 								BindingResult bindingResult, Model model) {
 		
+		if(board.getImgList() != null) {
+			board.getImgList().forEach(img -> log.info(img));
+		}
+		
 		// 1. 유효성 검증 + 카테고리 선택 검증
 		if(bindingResult.hasErrors()) {
 			if(board.getCategorynum() == 0) {
@@ -140,7 +155,7 @@ public class BoardController {
 	
 	// 게시물 삭제
 	@RequestMapping(value="/delete/{boardnum}")
-	public String deleteBoard(@PathVariable int boardnum, HttpSession session, Model model) {
+	public String deleteBoard(@PathVariable int boardnum, Criteria cri, HttpSession session, Model model) {
 		
 		// 1. 로그인 여부 체크: 세션에 email이 있는지 확인
 		String email = (String)session.getAttribute("email");
@@ -153,9 +168,13 @@ public class BoardController {
 		int membernum = (int)session.getAttribute("membernum");
 		model.addAttribute("membernum", membernum);
 		
+		// 3. 이미지 전체 목록 가져오기
+		List<ImgVO> imgList = boardService.getImg(boardnum);
+		
 		if(membernum == board.getMembernum()) {
 			boardService.deleteBoard(boardnum); // 같으면 삭제
-			return "redirect:/board";
+			deleteImgs(imgList); // 이미지도 삭제
+			return "redirect:/board" + cri.getListLink();
 		} else {
 			model.addAttribute("board", board);
 			model.addAttribute("msg", "게시물을 삭제할 수 없습니다.");
@@ -219,6 +238,34 @@ public class BoardController {
 		} else {
 			return "redirect:/board";
 		}
+	}
+	
+	// 이미지 출력
+	@RequestMapping(value="/getImgList", 
+					method=RequestMethod.GET, 
+					produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<ImgVO>> getImgList(int boardnum) {
+		return new ResponseEntity<>(boardService.getImg(boardnum), HttpStatus.OK);
+	}
+	
+	// 이미지 삭제
+	private void deleteImgs(List<ImgVO> imgList) {
+		if(imgList == null || imgList.size() == 0) {
+			return;
+		}
+		
+		imgList.forEach(img -> {
+			try {
+				Path file = Paths.get("/Users/dabin/upload/temp/" + img.getUploadpath() + "/" + img.getUuid() + "_" + img.getFilename());
+				Files.deleteIfExists(file); // 원본 이미지 삭제
+				
+				Path thumbNail = Paths.get("/Users/dabin/upload/temp/" + img.getUploadpath() + "/s_" + img.getUuid() + "_" + img.getFilename());
+				Files.delete(thumbNail);
+			} catch(Exception e) {
+				log.error("delete file error: " + e.getMessage());
+			}
+		});
 	}
 	
 

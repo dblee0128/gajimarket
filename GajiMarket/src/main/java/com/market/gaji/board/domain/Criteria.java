@@ -1,5 +1,7 @@
 package com.market.gaji.board.domain;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class Criteria {
 	
 	private int pageNum; // 페이지 번호
@@ -46,6 +48,17 @@ public class Criteria {
 	// 검색 조건을 배열로 만들어 한 번에 처리
 	public String[] getTypeArr() {
 		return type == null? new String[] {}: type.split("");
+	}
+	
+	// 파라미터 전송에 사용되는 문자열 처리
+	public String getListLink() {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+		.queryParam("pageNum", this.pageNum)
+		.queryParam("amount", this.getAmount())
+		.queryParam("type", this.getType())
+		.queryParam("keyword", this.getKeyword());
+		
+		return builder.toUriString();
 	}
 	
 	@Override

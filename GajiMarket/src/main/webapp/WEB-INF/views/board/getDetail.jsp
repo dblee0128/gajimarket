@@ -7,6 +7,58 @@
 <head>
 <meta charset="UTF-8">
 <title>가지마켓</title>
+<style>
+.uploadResult {
+	width: 100%;
+	background-color: #fafafa;
+}
+
+.uploadResult ul {
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.uploadResult ul li {
+	list-style: none;
+	padding: 10px;
+	align-content: center;
+	text-align: center;
+}
+
+.uploadResult ul li img {
+	width: 100px;
+}
+
+.uploadResult ul li span {
+	color: white;
+}
+
+.bigPictureWrapper {
+	position: absolute;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	top: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: gray;
+	z-index: 100;
+	background: rgba(255,255,255,0.5);
+}
+
+.bigPicture {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.bigPicture img {
+	width: 600px;
+}
+</style>
 <link href="<c:url value="/resources/css/board.css"/>" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
 </head>
@@ -15,6 +67,19 @@
 <div id="container">
 	<div id="wrap">
 		<input type="hidden" name="membernum" value="${membernum}">
+		<!-- 이미지 출력 부분 -->
+		<div class="bigPictureWrapper">
+			<div class="bigPicture">
+			<!-- 여기에 출력 -->
+			</div>
+		</div>
+		<!-- 첨부 파일 이름 출력 -->
+		<div class="uploadResult">
+			<ul>
+			<!-- 여기에 출력 -->
+			</ul>
+		</div>
+		
 		<table id="board_tb" style="text-align: left;">
 			<tr>
 				<td>제목</td>
@@ -72,7 +137,7 @@
 				<a href="/board/delete/${board.boardnum}"><button>삭제</button></a><br>${msg}
 			</c:if>
 		</div>		
-	</div>	
+	</div>
 	<!-- /board/modify라는 요청이 들어왔을 때 각각의 값을 보내준다  -->
 	<form action="/board/modify" method="get">
 		<input type="hidden" name="boardnum" value="<c:out value="${board.boardnum}"/>">
@@ -87,6 +152,69 @@
 
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.5.1.min.js"/>"></script>
 <script type="text/javascript" src="/resources/js/reply.js"></script>
+<script>
+// 이미지 가져오기
+$(document).ready(function(){
+	(function(){
+		var boardnum = '<c:out value="${board.boardnum}"/>';
+		$.getJSON("/board/getImgList", {boardnum: boardnum}, function(arr){
+			console.log(arr);
+			
+			var str = "";
+			
+			$(arr).each(function(i, attach){
+				
+					var fileCallPath = encodeURIComponent(attach.uploadpath + "/s_" + attach.uuid + "_" + attach.filename);
+					
+					str += "<li data-path='" + attach.uploadpath + "' data-uuid='" + attach.uuid + "' data-filename='" + attach.filename + "' data-type='" + attach.filetype + "'><div>";
+					str += "<img src='/display?fileName=" + fileCallPath + "'>";
+					str += "</div>";
+					str += "</li>";
+	
+			});
+			$(".uploadResult ul").html(str);
+		});
+	})();
+});
+
+// 이미지 크게 보기
+$(".uploadResult").on("click", "li", function(e){
+	
+	console.log("view image");
+	
+	var liObj = $(this);
+	
+	var path = encodeURIComponent(liObj.data("path") + "/" + liObj.data("uuid") + "_" + liObj.data("filename"));
+	
+	if(liObj.data("type")) {
+		showImage(path.replace(new RegExp("/")));
+	}
+});
+		
+// 해당 이미지의 경로를 보여줌
+function showImage(fileCallPath) {
+	//alert(fileCallPath);
+	
+	$(".bigPictureWrapper").css("display", "flex").show();
+	
+	$(".bigPicture")
+	.html("<img src='/display?fileName=" + fileCallPath + "'>")
+	.animate({width: '100%', height: '100%'}, 1000);
+}
+
+// 이미지 닫기
+$(".bigPictureWrapper").on("click", function(e){
+
+	$(".bigPicture").animate({width:'0%', height:'0%'}, 1000);
+	setTimeout(function(){
+		$('.bigPictureWrapper').hide(); 
+	}, 1000);
+});
+
+
+</script>
+
+
 <script>
 
 // 전체 댓글 목록

@@ -1,6 +1,7 @@
 package com.market.gaji.board.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.validation.constraints.Size;
 
@@ -34,13 +35,8 @@ public class BoardVO {
 	
 	private MemberVO member;
 	private CategoryVO category;
+	private List<ImgVO> imgList;
 	
-	public CategoryVO getCategory() {
-		return category;
-	}
-	public void setCategory(CategoryVO category) {
-		this.category = category;
-	}
 	public int getBoardnum() {
 		return boardnum;
 	}
@@ -108,12 +104,24 @@ public class BoardVO {
 	public void setReplycnt(int replycnt) {
 		this.replycnt = replycnt;
 	}
+	public CategoryVO getCategory() {
+		return category;
+	}
+	public void setCategory(CategoryVO category) {
+		this.category = category;
+	}
+	public List<ImgVO> getImgList() {
+		return imgList;
+	}
+	public void setImgList(List<ImgVO> imgList) {
+		this.imgList = imgList;
+	}
 	@Override
 	public String toString() {
 		return "BoardVO [boardnum=" + boardnum + ", title=" + title + ", price=" + price + ", content=" + content
 				+ ", sell=" + sell + ", readcnt=" + readcnt + ", regdate=" + regdate + ", categorynum=" + categorynum
 				+ ", membernum=" + membernum + ", replycnt=" + replycnt + ", member=" + member + ", category="
-				+ category + "]";
+				+ category + ", imgList=" + imgList + "]";
 	}
 	
 }

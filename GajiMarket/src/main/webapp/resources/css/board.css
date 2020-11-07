@@ -12,6 +12,13 @@ body {
 	border-width: 1px;
 }
 
+.upload {
+	width: 800px;
+	margin: 0 auto;
+	border-color: #d3d3d3;
+	border-width: 1px;
+}
+
 #board_tb {
 	width: 100%;
 	border-collapse: collapse;
