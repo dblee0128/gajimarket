@@ -17,6 +17,7 @@
 		<typeAlias type="com.market.gaji.board.domain.CategoryVO" alias="CategoryVO"/>
 		<typeAlias type="com.market.gaji.board.domain.Criteria" alias="Criteria"/>
 		<typeAlias type="com.market.gaji.board.domain.ImgVO" alias="ImgVO"/>
+		<typeAlias type="com.market.gaji.board.domain.LikeVO" alias="LikeVO"/>
 		
 		<typeAlias type="com.market.gaji.reply.domain.ReplyVO" alias="ReplyVO"/>
 		

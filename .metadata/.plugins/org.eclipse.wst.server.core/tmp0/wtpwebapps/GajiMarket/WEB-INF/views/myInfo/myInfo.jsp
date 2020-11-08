@@ -18,7 +18,7 @@
 			<td><a href="/myInfo/board/get" style="color: black;"><button>판매 내역</button></a></td>
 		</tr>
 		<tr>
-			<td><a href="#" style="color: black;"><button>관심 목록</button></a></td>
+			<td><a href="/myInfo/board/getLike" style="color: black;"><button>관심 목록</button></a></td>
 		</tr>
 		<tr>
 			<td><a href="/myInfo/member/get" style="color: black;"><button>나의 정보</button></a></td>

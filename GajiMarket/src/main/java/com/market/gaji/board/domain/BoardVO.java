@@ -32,6 +32,7 @@ public class BoardVO {
 	private int categorynum;
 	private int membernum;
 	private int replycnt; // 댓글 조회수 추가
+	private int likecnt; // 관심 개수 추가
 	
 	private MemberVO member;
 	private CategoryVO category;
@@ -91,7 +92,6 @@ public class BoardVO {
 	public void setMembernum(int membernum) {
 		this.membernum = membernum;
 	}
-	
 	public MemberVO getMember() {
 		return member;
 	}
@@ -116,12 +116,18 @@ public class BoardVO {
 	public void setImgList(List<ImgVO> imgList) {
 		this.imgList = imgList;
 	}
+	public int getLikecnt() {
+		return likecnt;
+	}
+	public void setLikecnt(int likecnt) {
+		this.likecnt = likecnt;
+	}
 	@Override
 	public String toString() {
 		return "BoardVO [boardnum=" + boardnum + ", title=" + title + ", price=" + price + ", content=" + content
 				+ ", sell=" + sell + ", readcnt=" + readcnt + ", regdate=" + regdate + ", categorynum=" + categorynum
-				+ ", membernum=" + membernum + ", replycnt=" + replycnt + ", member=" + member + ", category="
-				+ category + ", imgList=" + imgList + "]";
+				+ ", membernum=" + membernum + ", replycnt=" + replycnt + ", likecnt=" + likecnt + ", member=" + member
+				+ ", category=" + category + ", imgList=" + imgList + "]";
 	}
 	
 }

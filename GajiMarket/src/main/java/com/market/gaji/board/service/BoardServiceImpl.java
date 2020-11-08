@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.market.gaji.board.domain.BoardVO;
 import com.market.gaji.board.domain.Criteria;
 import com.market.gaji.board.domain.ImgVO;
+import com.market.gaji.board.domain.LikeVO;
 import com.market.gaji.board.mapper.BoardMapper;
 import com.market.gaji.board.mapper.ImgMapper;
 
@@ -97,15 +98,10 @@ public class BoardServiceImpl implements BoardService {
 	public int getTotalCountMyBoard(Criteria cri, int membernum) {
 		return boardMapper.getTotalCountMyBoard(cri, membernum);
 	}
-
+	
 	@Override
 	public List<ImgVO> getImg(int boardnum) {
 		return imgMapper.getImg(boardnum);
 	}
-
-
-
-
-
 	
 }

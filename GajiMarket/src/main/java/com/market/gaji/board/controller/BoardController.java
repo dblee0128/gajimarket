@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,7 +25,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.market.gaji.board.domain.BoardVO;
 import com.market.gaji.board.domain.Criteria;
 import com.market.gaji.board.domain.ImgVO;
+import com.market.gaji.board.domain.LikeVO;
 import com.market.gaji.board.domain.PageDTO;
+import com.market.gaji.board.service.BoardLikeService;
 import com.market.gaji.board.service.BoardService;
 import com.market.gaji.member.domain.MemberVO;
 import com.market.gaji.member.service.MemberService;
@@ -42,26 +45,8 @@ public class BoardController {
 	@Autowired
 	private MemberService memberService;
 	
-	// 전체 게시물 조회 - 페이징 전
-//	@RequestMapping
-//	public String getAllBoard(HttpSession session, Model model) {
-//		
-//		// 1. 로그인 여부 체크: 세션에 email이 있는지 확인
-//		String email = (String)session.getAttribute("email");
-//		if(email == null) {
-//			return "redirect:/";
-//		}
-//		
-//		// 2. 로그인한 회원의 정보 조회
-//		MemberVO member = memberService.getMember(email); // 세션의 email로 회원 정보 조회하기
-//		model.addAttribute("member", member);
-//		
-//		// 3. 게시판 전체 목록 가져오기 - 회원의 주소 기준
-//		List<BoardVO> board = boardService.getListBoard(member.getAddressnum());
-//		model.addAttribute("board", board);
-//		
-//		return "/board/get";
-//	}
+	@Autowired
+	private BoardLikeService likeService;
 	
 	// 전체 게시물 조회 - 페이징 후
 	@RequestMapping
@@ -104,7 +89,23 @@ public class BoardController {
 		if(board == null) { // 존재하지 않는 게시물이라면
 			return "redirect:/board";
 		}
+		
+		// 3. 좋아요 테이블에서 사용자가 좋아요 눌렀는지 확인
+		LikeVO likevo = new LikeVO();
+		likevo.setBoardnum(boardnum);
+		likevo.setMembernum((int)session.getAttribute("membernum"));
+		System.out.println("likevo: " + likevo); // OK
+		
+		int likeCheck = likeService.getLikeOrDisLike(likevo); // 좋아요 했냐 안했냐? 좋아요한 개수가 담김
+		System.out.println("likeCheck: " + likeCheck);
+		
+		if(likeCheck == 1) { // 좋아요 했으면
+			model.addAttribute("likeCheck", likeCheck);
+		} else { // 좋아요 안했으면
+			model.addAttribute("likeCheck", 0);
+		}
 		model.addAttribute("board", board);
+		model.addAttribute("membernum", (int)session.getAttribute("membernum"));
 		model.addAttribute("pageNum", cri.getPageNum()); // 페이징 추가
 		model.addAttribute("amount", cri.getAmount()); // 페이징 추가
 		
@@ -268,5 +269,42 @@ public class BoardController {
 		});
 	}
 	
+	
+	
+	// 좋아요 
+	
+	// 좋아요 추가 기능
+	@RequestMapping(value="/like", method=RequestMethod.POST, consumes = "application/json")
+	@ResponseBody
+	public String likeBoard(@RequestBody LikeVO likevo) {
+		
+		int likeCheck = likeService.getLikeOrDisLike(likevo);
+		int response = 0;
+		
+		if(likeCheck == 0) { // 하얀하트
+			likeService.insertBoardLike(likevo); 
+			response = 1; // 빨간하트
+			
+		} else if(likeCheck > 0) { // 빨간하트
+			likeService.deleteBoardLike(likevo); 
+			response = 0; // 하얀하트
+		}
+		return String.valueOf(response);
+	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

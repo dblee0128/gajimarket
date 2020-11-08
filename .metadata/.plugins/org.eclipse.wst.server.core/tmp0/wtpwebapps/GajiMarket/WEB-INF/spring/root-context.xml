@@ -35,10 +35,28 @@
 	
 	<tx:annotation-driven/>
 	
+	<!-- 이메일 설정 -->
+	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="587"/>
+		<property name="username" value="webtest0128@gmail.com"/>
+		<property name="password" value="tmvmfldtest!"/>
+		<property name="defaultEncoding" value="utf-8"/>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.debug">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtps.ssl.checkserveridentity">true</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtps.ssl.trust">*</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+			</props>
+		</property>
+	</bean>
+	
 	<!-- mapper.xml 스캔 -->
 	<mybatis-spring:scan base-package="com.market.gaji.member.mapper"/>
 	<mybatis-spring:scan base-package="com.market.gaji.board.mapper"/>
 	<mybatis-spring:scan base-package="com.market.gaji.reply.mapper"/>
-	<mybatis-spring:scan base-package="com.market.gaji.img.mapper"/>
 	
 </beans>

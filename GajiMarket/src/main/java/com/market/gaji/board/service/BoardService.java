@@ -38,5 +38,6 @@ public interface BoardService {
 	// 나의 게시물 조회 - 페이징 처리
 	public List<BoardVO> getListPagingMyBoard(@Param("cri") Criteria cri, @Param("membernum") int membernum);
 	public int getTotalCountMyBoard(@Param("cri") Criteria cri, @Param("membernum") int membernum);
+
 	
 }

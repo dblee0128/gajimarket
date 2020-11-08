@@ -1,8 +1,0 @@
-console.log("Reply Module");
-
-var replyService = (function(){
-	function add(reply, callback) {
-		colsole.log("reply");
-	}
-	return {add:add};
-})();

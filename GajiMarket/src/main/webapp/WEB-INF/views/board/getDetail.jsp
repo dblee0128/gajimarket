@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,18 +67,31 @@
 <div id="container">
 	<div id="wrap">
 		<input type="hidden" name="membernum" value="${membernum}">
+		
 		<!-- 이미지 출력 부분 -->
 		<div class="bigPictureWrapper">
 			<div class="bigPicture">
 			<!-- 여기에 출력 -->
 			</div>
 		</div>
+		
 		<!-- 첨부 파일 이름 출력 -->
 		<div class="uploadResult">
 			<ul>
 			<!-- 여기에 출력 -->
 			</ul>
 		</div>
+		
+		<!-- 좋아요 누르는 부분 -->
+		<c:choose>
+			<c:when test="${likeCheck eq '0'}">
+				<img src="/resources/img/like_off.png" class="likeBtn" align="left" style="cursor: pointer; width: 20px;">
+			</c:when>
+			<c:otherwise>
+				<img src="/resources/img/like_on.png" class="likeBtn" align="left" style="cursor: pointer; width: 20px;">
+			</c:otherwise>
+		</c:choose>
+
 		
 		<table id="board_tb" style="text-align: left;">
 			<tr>
@@ -100,6 +113,10 @@
 			<tr>
 				<td>조회수</td>
 				<td>${board.readcnt}</td>
+			</tr>
+			<tr>
+				<td>관심수</td>
+				<td>${board.likecnt}</td>
 			</tr>
 			<tr>
 				<td>작성일자</td>
@@ -152,6 +169,41 @@
 
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.5.1.min.js"/>"></script>
 <script type="text/javascript" src="/resources/js/reply.js"></script>
+<script>
+// 좋아요 부분
+$(document).ready(function(){
+	
+	var membernum = '<c:out value="${membernum}"/>';
+	var boardnum = '<c:out value="${board.boardnum}"/>';
+	
+	$(".likeBtn").on("click", function(){
+		
+		var data = {
+			boardnum: boardnum,
+			membernum: membernum
+		};
+		
+		$.ajax({
+			type: 'POST',
+			url: '/board/like',
+			data: JSON.stringify(data),
+			contentType: "application/json; charset=utf-8",
+			success: function(response) {
+				if(response == 1) {
+					console.log('좋아요');
+					$(".likeBtn").attr("src", "/resources/img/like_on.png");
+				} else {
+					console.log('안좋아요');
+					$(".likeBtn").attr("src", "/resources/img/like_off.png");
+				}
+				
+			}
+				
+		});
+	})
+});
+</script>
+
 <script>
 // 이미지 가져오기
 $(document).ready(function(){

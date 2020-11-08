@@ -44,6 +44,7 @@
 				<td class="small">${board.member.nickname}</td>
 				<td class="small">${board.regdate}</td>
 				<td class="small">${board.readcnt}</td>
+				<td>${board.likecnt}</td>
 				<td>${board.boardnum}</td>
 			</tr>
 			</c:forEach>	
