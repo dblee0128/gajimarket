@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.market.gaji.notice.mapper.NoticeMapper">
+
+	<!-- 전체 공지 조회 -->
+	<select id="getListNotice" resultType="NoticeVO">
+		select * from tbl_notice
+		order by noticenum desc
+	</select>
+
+	<!-- 공지 상세 조회 -->
+	<select id="getDetailNotice" parameterType="int" resultType="NoticeVO">
+		select * from tbl_notice
+		where noticenum = #{noticenum}
+	</select>
+	
+	<!-- 공지 등록 -->
+	<insert id="registerNotice" parameterType="NoticeVO">
+		insert into tbl_notice (noticenum, title, content, membernum)
+		values (notice_seq.nextval, #{title}, #{content}, #{membernum})
+	</insert>
+	
+	<!-- 공지 수정 -->
+	<update id="modifyNotice" parameterType="NoticeVO">
+		update tbl_notice set
+		title = #{title}, content = #{content}
+		where noticenum = #{noticenum}
+	</update>
+	
+	<!-- 공지 삭제 -->
+	<delete id="deleteNotice" parameterType="int">
+		delete from tbl_notice
+		where noticenum = #{noticenum}
+	</delete>
+	
+	<!-- 전체 공지 조회 + 페이징 -->
+	<select id="getListPagingNotice" parameterType="Criteria" resultType="NoticeVO">
+		<![CDATA[
+		select noticenum, title, content, regdate, membernum
+		from(
+			select rownum rn, noticenum, title, content, regdate, membernum
+			from(
+				select noticenum, title, content, regdate, membernum 
+				from tbl_notice
+				order by noticenum desc
+				)
+			where
+		]]> 
+			
+		<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>	
+		</trim>
+		
+		<![CDATA[	
+			rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 공지글 전체 개수 -->
+	<select id="getTotalCountNotice" parameterType="Criteria" resultType="int">
+		select count(*)
+		from tbl_notice
+		where
+		<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>	
+		</trim>
+		noticenum > 0
+	</select>
+
+</mapper>

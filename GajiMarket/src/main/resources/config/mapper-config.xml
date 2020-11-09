@@ -21,6 +21,13 @@
 		
 		<typeAlias type="com.market.gaji.reply.domain.ReplyVO" alias="ReplyVO"/>
 		
+		<typeAlias type="com.market.gaji.notice.domain.NoticeVO" alias="NoticeVO"/>
+		
+		<typeAlias type="com.market.gaji.qna.domain.QnaVO" alias="QnaVO"/>
+		<typeAlias type="com.market.gaji.qna.domain.QnaTypeVO" alias="QnaTypeVO"/>
+		<typeAlias type="com.market.gaji.qna.domain.QnaReplyVO" alias="QnaReplyVO"/>
+		
+		
 
 	</typeAliases>
 

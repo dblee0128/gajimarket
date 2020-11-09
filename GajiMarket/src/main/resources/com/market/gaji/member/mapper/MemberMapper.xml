@@ -50,6 +50,7 @@
 		<result column="phone" property="phone"/>
 		<result column="regdate" property="regdate"/>
 		<result column="addressnum" property="addressnum"/>
+		<result column="isadmin" property="isadmin"/>
 		
 		<collection javaType="AddressVO" property="address">
 			<id column="addressnum" property="addressnum"/>

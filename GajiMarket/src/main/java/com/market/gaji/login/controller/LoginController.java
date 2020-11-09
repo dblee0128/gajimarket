@@ -53,6 +53,7 @@ public class LoginController {
 				session.setAttribute("nickname", check.getNickname());
 				session.setAttribute("membernum", check.getMembernum());
 				session.setAttribute("addressnum", check.getAddressnum());
+				session.setAttribute("isadmin", check.getIsadmin());
 				session.setAttribute("member", check);
 				
 				// 정보를 뷰로 뿌려주기

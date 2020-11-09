@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.market.gaji.qna.mapper.QnaMapper">
+	
+	<!-- 전체 문의 목록 -->
+	<select id="getQnaList" parameterType="Criteria" resultMap="qna">
+		<![CDATA[
+		select qnanum, title, content, regdate, typename, nickname
+		from(
+			select rownum rn, qnanum, title, content, regdate, typename, nickname
+			from(
+				select a.qnanum, a.title, a.content, a.regdate, b.typename, c.nickname
+				from tbl_qna a 
+				join tbl_qnatype b on a.typenum = b.typenum 
+				join tbl_member c on a.membernum = c.membernum
+				order by a.qnanum desc
+				)
+			where rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 문의 상세 조회 -->
+	<select id="getDetailQna" parameterType="int" resultMap="qna">
+		select a.qnanum, a.title, a.content, a.regdate, b.typename, c.nickname
+		from tbl_qna a 
+		join tbl_qnatype b on a.typenum = b.typenum 
+		join tbl_member c on a.membernum = c.membernum
+		where a.qnanum = #{qnanum}
+		order by a.qnanum desc
+	</select>
+	
+	<!-- 문의 등록 -->
+	<insert id="registerQna" parameterType="QnaVO">
+		insert into tbl_qna (qnanum, title, content, typenum, membernum)
+		values (QNA_SEQ.NEXTVAL, #{title}, #{content}, #{typenum}, #{membernum})
+	</insert>
+	
+	<!-- 문의 삭제 -->
+	<delete id="deleteQna" parameterType="int">
+		delete from tbl_qna
+		where qnanum = #{qnanum}
+	</delete>
+	
+	<!-- 문의 수정 -->
+	<update id="modifyQna" parameterType="QnaVO">
+		update tbl_qna set
+		title = #{title}, content = #{content}, typenum = #{typenum}
+		where qnanum = #{qnanum}
+	</update>
+	
+	<!-- 내가 쓴 문의 조회 -->
+	<select id="getMyQnaList" parameterType="int" resultMap="qna">
+		select a.qnanum, a.title, a.content, a.regdate, b.typename, c.nickname
+		from tbl_qna a 
+		join tbl_qnatype b on a.typenum = b.typenum 
+		join tbl_member c on a.membernum = c.membernum
+		where a.membernum = #{membernum}
+		order by a.qnanum desc;
+	</select>
+	
+	<resultMap type="QnaVO" id="qna">
+		<id column="qnanum" property="qnanum"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="regdate" property="regdate"/>
+		<result column="typenum" property="typenum"/>
+		<result column="membernum" property="membernum"/>
+		
+		<collection javaType="QnaTypeVO" property="type">
+			<id column="typenum" property="typenum"/>
+			<result column="typename" property="typename"/>
+		</collection>
+		
+		<collection javaType="MemberVO" property="member">
+			<id column="membernum" property="membernum"/>
+			<result column="email" property="email"/>
+			<result column="password" property="password"/>
+			<result column="nickname" property="nickname"/>
+			<result column="phone" property="phone"/>
+			<result column="regdate" property="regdate"/>
+			<result column="addressnum" property="addressnum"/>	
+		</collection>
+	</resultMap>
+
+</mapper>

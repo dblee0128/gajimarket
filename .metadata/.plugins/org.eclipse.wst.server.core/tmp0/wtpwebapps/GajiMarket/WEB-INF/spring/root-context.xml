@@ -58,5 +58,7 @@
 	<mybatis-spring:scan base-package="com.market.gaji.member.mapper"/>
 	<mybatis-spring:scan base-package="com.market.gaji.board.mapper"/>
 	<mybatis-spring:scan base-package="com.market.gaji.reply.mapper"/>
+	<mybatis-spring:scan base-package="com.market.gaji.notice.mapper"/>
+	<mybatis-spring:scan base-package="com.market.gaji.qna.mapper"/>
 	
 </beans>

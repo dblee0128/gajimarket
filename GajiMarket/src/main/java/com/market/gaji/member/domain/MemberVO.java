@@ -18,9 +18,9 @@ public class MemberVO {
 	private String phone;
 	private Date regdate;
 	private int addressnum;
-	
+	private int isadmin;
+
 	private AddressVO address;
-	
 
 	public int getMembernum() {
 		return membernum;
@@ -70,11 +70,17 @@ public class MemberVO {
 	public void setAddress(AddressVO address) {
 		this.address = address;
 	}
+	public int getIsadmin() {
+		return isadmin;
+	}
+	public void setIsadmin(int isadmin) {
+		this.isadmin = isadmin;
+	}
 	@Override
 	public String toString() {
 		return "MemberVO [membernum=" + membernum + ", email=" + email + ", password=" + password + ", nickname="
-				+ nickname + ", phone=" + phone + ", regdate=" + regdate + ", addressnum=" + addressnum + ", address="
-				+ address + "]";
+				+ nickname + ", phone=" + phone + ", regdate=" + regdate + ", addressnum=" + addressnum + ", isadmin="
+				+ isadmin + ", address=" + address + "]";
 	}
 	
 }

@@ -22,7 +22,7 @@ public class BoardVO {
 	private String price;
 	
 	@NotEmpty(message = "내용을 입력해주세요.")
-	@Size(min=1, max=5000, message="500자 이내로 입력해주세요.")
+	@Size(min=1, max=1000, message="500자 이내로 입력해주세요.")
 	private String content;
 
 	private String sell;
