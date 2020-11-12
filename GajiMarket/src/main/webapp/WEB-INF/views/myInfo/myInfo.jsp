@@ -15,6 +15,9 @@
 	<h3 align="center">가지마켓에서의<br>활동 내역 및 회원 정보를 관리하세요.</h3>
 	<table>
 		<tr>
+			<td><a href="/myInfo/qna" style="color: black;"><button>문의 내역</button></a></td>
+		</tr>
+		<tr>
 			<td><a href="/myInfo/board/get" style="color: black;"><button>판매 내역</button></a></td>
 		</tr>
 		<tr>

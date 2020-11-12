@@ -19,6 +19,11 @@ public class QnaServiceImpl implements QnaService {
 	public List<QnaVO> getQnaList(Criteria cri) {
 		return qnaMapper.getQnaList(cri);
 	}
+	
+	@Override
+	public int getCountQnaList(Criteria cri) {
+		return qnaMapper.getCountQnaList(cri);
+	}
 
 	@Override
 	public QnaVO getDetailQna(int qnanum) {
@@ -44,5 +49,7 @@ public class QnaServiceImpl implements QnaService {
 	public List<QnaVO> getMyQnaList(int membernum) {
 		return qnaMapper.getMyQnaList(membernum);
 	}
+
+
 
 }

@@ -54,8 +54,9 @@ public class MyInfoMemberController {
 		
 		MemberVO member = memberService.getMember(email); // 입력한 정보를 가져오기 (email은 hidden으로 넘겨줄거야)
 		System.out.println("member: " + member);
-		
+	
 		if(member.getPassword().equals(password)) { // 비밀번호가 일치하면
+			memberService.removeMember(member.getMembernum());
 			memberService.deleteMember(email, password); // 삭제 진행
 			session.invalidate(); // 세션도 끊어주기
 			return "/myInfo/member/deleteSuccess";

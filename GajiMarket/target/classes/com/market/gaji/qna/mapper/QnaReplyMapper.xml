@@ -33,11 +33,17 @@
 	</delete>
 	
 	<!-- 댓글 수정 -->
-	<update id="modifyReply" parameterType="QnaReplyVO">
+	<update id="modifyQnaReply" parameterType="QnaReplyVO">
 		update tbl_qna_reply set
 		qnareply = #{qnareply}
 		where qnareplynum = #{qnareplynum}
 	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="removeQnaReplyMem" parameterType="int">
+		delete from tbl_qna_reply
+		where membernum = #{membernum}
+	</delete>
 	
 	<resultMap type="QnaReplyVO" id="qnaReply">
 		<id column="qnareplynum" property="qnareplynum"/>

@@ -91,5 +91,11 @@
 		</trim>
 		noticenum > 0
 	</select>
+	
+	<!-- 공지글 삭제 : 회원번호 -->
+	<delete id="removeNoticeMem" parameterType="int">
+		delete from tbl_notice
+		where membernum = #{membernum}
+	</delete>
 
 </mapper>

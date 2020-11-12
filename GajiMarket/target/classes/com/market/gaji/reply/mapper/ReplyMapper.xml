@@ -39,6 +39,16 @@
 		order by replynum asc
 	</select>
 	
+	<delete id="removeReplyMem" parameterType="int">
+		delete from tbl_reply
+		where membernum = #{membernum}
+	</delete>
+	
+	<delete id="removeReplyBrd" parameterType="int">
+		delete from tbl_reply
+		where boardnum = #{boardnum}
+	</delete>
+	
 	<resultMap type="ReplyVO" id="replyvo">
 		<id column="replynum" property="replynum"/>
 		<result column="reply" property="reply"/>

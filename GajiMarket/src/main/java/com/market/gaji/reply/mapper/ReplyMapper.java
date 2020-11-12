@@ -20,6 +20,13 @@ public interface ReplyMapper {
 	
 	// 전체 댓글 조회
 	public List<ReplyVO> getListRelpy(int boardnum);
+	
+	// 댓글 삭제 - 회원번호
+	public void removeReplyMem(int membernum);
+	
+	// 댓글 삭제 - 게시글번호
+	public void removeReplyBrd(int boardnum);
+	
 
 
 }

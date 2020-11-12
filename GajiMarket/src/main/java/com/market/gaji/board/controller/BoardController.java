@@ -207,8 +207,8 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/modify/{boardnum}", method = RequestMethod.POST)
-	public String modifyBoard(@PathVariable int boardnum, @ModelAttribute("board") @Valid BoardVO board, 
-							  @ModelAttribute("cri") Criteria cri, BindingResult bindingResult, HttpSession session, Model model) {
+	public String modifyBoard(@PathVariable int boardnum, @ModelAttribute("board") @Valid BoardVO board, BindingResult bindingResult, 
+							  @ModelAttribute("cri") Criteria cri, HttpSession session, Model model) {
 		
 		// 1. 로그인 여부 체크: 세션에 email이 있는지 확인
 		String email = (String)session.getAttribute("email");

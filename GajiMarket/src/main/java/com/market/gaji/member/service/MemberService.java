@@ -1,5 +1,8 @@
 package com.market.gaji.member.service;
 
+import java.util.List;
+
+import com.market.gaji.board.domain.Criteria;
 import com.market.gaji.member.domain.MemberVO;
 
 public interface MemberService {
@@ -27,6 +30,20 @@ public interface MemberService {
 	
 	// 회원정보 수정 - 비밀번호 변경	
 	public void modifyPwMember(MemberVO member);
+	
+	// 전체 회원 조회 - 관리자
+	public List<MemberVO> getListMember(Criteria cri);
+	
+	// 전체 회원 수 - 관리자
+	public int getCountAllMember(Criteria cri);
+	
+	// 여기부터 관리자
+	// 회원 강제 탈퇴 기능 - 관리자
+	public void removeMember(int membernum);
+	
+	// 회원 <-> 관리자 수정
+	public void changeAdminOrMember(int isadmin, int membernum);
+	
 
 
 }

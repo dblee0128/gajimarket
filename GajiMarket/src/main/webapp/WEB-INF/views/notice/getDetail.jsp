@@ -21,7 +21,7 @@
 			</tr>
 			<tr>
 				<td style="height: 100px; width: 100px;">내용</td>
-				<td>${notice.content}</td>
+				<td><pre><c:out value="${notice.content}"/></pre></td>
 			</tr>
 			<tr>
 				<td>작성일자</td>

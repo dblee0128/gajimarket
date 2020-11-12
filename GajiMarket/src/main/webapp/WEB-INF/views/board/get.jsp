@@ -58,6 +58,7 @@
 					<option value="T" <c:out value="${pageMaker.cri.type eq 'T'? 'selected':''}"/>>제목</option>
 					<option value="C" <c:out value="${pageMaker.cri.type eq 'C'? 'selected':''}"/>>내용</option>
 					<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'? 'selected':''}"/>>제목/내용</option>
+					<option value="N" <c:out value="${pageMaker.cri.type eq 'N'? 'selected':''}"/>>작성자</option>
 				</select>			
 				<input type="text" name="keyword" value="${pageMaker.cri.keyword}">
 				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
@@ -68,6 +69,7 @@
 		
 		
 		<!-- 페이징 -->
+		
 		<div id="pagingArea">
 			<ul>
 				<c:if test="${pageMaker.prev}">
@@ -89,6 +91,7 @@
 				</c:if>
 			</ul>	
 		</div>
+		
 		<!-- /board라는 요청이 들어올 때, 각각의 값을 보내준다 -->
 		<form action="/board" method="get">
 			<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
@@ -96,6 +99,7 @@
 			<input type="hidden" name="type" value="<c:out value="${pageMaker.cri.type}"/>">
 			<input type="hidden" name="keyword" value="<c:out value="${pageMaker.cri.keyword}"/>">
 		</form>
+
 	</div>	
 </div>	
 <%@ include file="../includes/footer.jsp"%>

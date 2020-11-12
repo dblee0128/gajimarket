@@ -7,7 +7,7 @@ import com.market.gaji.qna.domain.QnaReplyVO;
 public interface QnaReplyMapper {
 	
 	// 댓글 등록
-	public int registerQnaReply(QnaReplyVO qnareply);
+	public int registerQnaReply(QnaReplyVO qnareplyVo);
 	
 	// 하나의 댓글 조회
 	public QnaReplyVO getQnaReply(int qnareplynum);
@@ -19,6 +19,9 @@ public interface QnaReplyMapper {
 	public int deleteQnaReply(int qnareplynum);
 
 	// 댓글 수정
-	public int modifyReply(QnaReplyVO qnareply);	
+	public int modifyQnaReply(QnaReplyVO qnareplyVo);
+	
+	// Qna 댓글 삭제 : 회원번호
+	public void removeQnaReplyMem(int membernum);
 
 }

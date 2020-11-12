@@ -42,6 +42,79 @@
 		where membernum = #{membernum}
 	</select>
 	
+	<!-- 전체 회원 조회 (관리자) -->
+	<select id="getListMember" parameterType="Criteria" resultMap="member">
+		<![CDATA[
+		select membernum, email, password, nickname, phone, regdate, addressnum, isadmin, addressname
+		from(
+			select rownum rn, membernum, email, password, nickname, phone, regdate, addressnum, isadmin, addressname
+			from(
+				select a.membernum, a.email, a.password, a.nickname, a.phone, a.regdate, a.addressnum, a.isadmin, b.addressname
+				from tbl_member a
+				join tbl_address b on a.addressnum = b.addressnum
+				order by a.isadmin desc
+				)
+			where 
+		]]>
+		<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'E'.toString()">
+							email like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'N'.toString()">
+							nickname like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'A'.toString()">
+							addressname like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'I'.toString()">
+							isadmin like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>	
+		</trim>	
+		<![CDATA[	
+			rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 전체 회원 수 조회 (관리자) -->
+	<select id="getCountAllMember" parameterType="Criteria" resultType="int">
+		select count(*) 
+		from(
+			select a.membernum, a.email, a.password, a.nickname, a.phone, a.regdate, a.addressnum, a.isadmin, b.addressname
+			from tbl_member a
+			join tbl_address b on a.addressnum = b.addressnum
+		)
+		where
+		<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'E'.toString()">
+							email like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'N'.toString()">
+							nickname like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'A'.toString()">
+							addressname like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'ISADMIN'.toString()">
+							isadmin like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>	
+		</trim>	
+		membernum > 0
+	</select>
+	
 	<resultMap type="MemberVO" id="member">
 		<id column="membernum" property="membernum"/>
 		<result column="email" property="email"/>
@@ -77,6 +150,22 @@
 		update tbl_member
 		set password = #{password}
 		where email = #{email}
+	</update>
+	
+	<!-- 회원 강제 탈퇴 (관리자) 
+		 회원 탈퇴를 위해서는 tbl_like 삭제, tbl_board 삭제, tbl_member 삭제 순으로 진행 -->
+	<delete id="removeMember" parameterType="int">
+		delete
+		from tbl_member
+		where membernum = #{membernum}
+	</delete>
+	
+	
+	<!-- 회원 <-> 관리자 전환 (관리자)-->
+	<update id="changeAdminOrMember">
+		update tbl_member set
+		isadmin = #{isadmin}
+		where membernum = #{membernum}
 	</update>
 	
 	

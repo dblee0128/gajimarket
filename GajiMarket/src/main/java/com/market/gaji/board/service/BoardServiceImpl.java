@@ -11,6 +11,8 @@ import com.market.gaji.board.domain.Criteria;
 import com.market.gaji.board.domain.ImgVO;
 import com.market.gaji.board.mapper.BoardMapper;
 import com.market.gaji.board.mapper.ImgMapper;
+import com.market.gaji.board.mapper.LikeMapper;
+import com.market.gaji.reply.mapper.ReplyMapper;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -20,6 +22,12 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
 	private ImgMapper imgMapper;
+	
+	@Autowired
+	private LikeMapper likeMapper;
+	
+	@Autowired
+	private ReplyMapper replyMapper;
 
 	@Override
 	public List<BoardVO> getListBoard(int addressnum) {
@@ -28,8 +36,8 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardVO getDetailBoard(int boardnum) {
-		boardMapper.modifyPlusReadCnt(boardnum);
-		return boardMapper.getDetailBoard(boardnum);
+		boardMapper.modifyPlusReadCnt(boardnum); // 조회 수 증가 후, 
+		return boardMapper.getDetailBoard(boardnum); // 조회
 	}
 	
 	@Transactional
@@ -53,6 +61,8 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	@Override
 	public void deleteBoard(int boardnum) {
+		likeMapper.removeBoardLikeBrd(boardnum); // 좋아요 여부 삭제
+		replyMapper.removeReplyBrd(boardnum);// 댓글 삭제
 		imgMapper.deleteAllImg(boardnum); // 이미지도 함께 삭제되도록 함
 		boardMapper.deleteBoard(boardnum); // 게시물이 삭제될 때
 	}
@@ -101,6 +111,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<ImgVO> getImg(int boardnum) {
 		return imgMapper.getImg(boardnum);
+	}
+
+	@Override
+	public List<BoardVO> getAllBoard(Criteria cri) {
+		return boardMapper.getAllBoard(cri);
+	}
+
+	@Override
+	public int getAllBoardCount(Criteria cri) {
+		return boardMapper.getAllBoardCount(cri);
 	}
 	
 }

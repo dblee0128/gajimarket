@@ -104,7 +104,7 @@
 			</tr>
 			<tr>
 				<td style="height: 100px; width: 100px;">내용</td>
-				<td>${board.content}</td>
+				<td><pre><c:out value="${board.content}"/></pre></td>
 			</tr>
 			<tr>
 				<td>판매여부</td>

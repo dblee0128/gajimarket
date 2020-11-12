@@ -2,13 +2,24 @@ package com.market.gaji.qna.domain;
 
 import java.sql.Date;
 
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.market.gaji.member.domain.MemberVO;
 
 public class QnaVO {
 	
 	private int qnanum;
+	
+	@NotEmpty(message = "제목을 입력해주세요.")
+	@Size(min=1, max=50, message="1-50자 이내로 입력해주세요.")
 	private String title;
+	
+	@NotEmpty(message = "내용을 입력해주세요.")
+	@Size(min=1, max=500, message="500자 이내로 입력해주세요.")
 	private String content;
+	
 	private Date regdate;
 	private int typenum;
 	private int membernum;

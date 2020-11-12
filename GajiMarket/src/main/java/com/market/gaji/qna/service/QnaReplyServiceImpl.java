@@ -15,8 +15,8 @@ public class QnaReplyServiceImpl implements QnaReplyService {
 	private QnaReplyMapper qnaReplyMapper;
 
 	@Override
-	public int registerQnaReply(QnaReplyVO qnareply) {
-		return qnaReplyMapper.registerQnaReply(qnareply);
+	public int registerQnaReply(QnaReplyVO qnareplyVo) {
+		return qnaReplyMapper.registerQnaReply(qnareplyVo);
 	}
 
 	@Override
@@ -35,8 +35,8 @@ public class QnaReplyServiceImpl implements QnaReplyService {
 	}
 
 	@Override
-	public int modifyReply(QnaReplyVO qnareply) {
-		return qnaReplyMapper.modifyReply(qnareply);
+	public int modifyQnaReply(QnaReplyVO qnareplyVo) {
+		return qnaReplyMapper.modifyQnaReply(qnareplyVo);
 	}
 	
 

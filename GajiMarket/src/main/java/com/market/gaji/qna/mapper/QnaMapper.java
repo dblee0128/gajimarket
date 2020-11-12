@@ -10,6 +10,9 @@ public interface QnaMapper {
 	// 전체 문의 목록 (페이징) - 관리자
 	public List<QnaVO> getQnaList(Criteria cri);
 	
+	// 전체 게시물 개수
+	public int getCountQnaList(Criteria cri);
+	
 	// 문의 상세 조회
 	public QnaVO getDetailQna(int qnanum);
 
@@ -24,5 +27,8 @@ public interface QnaMapper {
 
 	// 내가 쓴 문의 조회
 	public List<QnaVO> getMyQnaList(int membernum);
+	
+	// 문의 삭제 - 회원번호
+	public void removeQnaMem(int membernum);
 
 }

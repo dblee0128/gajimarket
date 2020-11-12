@@ -31,4 +31,10 @@ public interface LikeMapper {
 	// 마이페이지 - 나의 관심 목록 총 개수
 	public int getMyBoardLikeCount(@Param("cri") Criteria cri, @Param("membernum") int membernum);
 	
+	// 좋아요 정보 삭제 - 회원번호
+	public void removeBoardLikeMem(int membernum);
+	
+	// 좋아요 정보 삭제 - 게시글번호
+	public void removeBoardLikeBrd(int boardnum);
+	
 }

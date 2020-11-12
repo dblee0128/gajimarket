@@ -38,6 +38,11 @@ public interface BoardService {
 	// 나의 게시물 조회 - 페이징 처리
 	public List<BoardVO> getListPagingMyBoard(@Param("cri") Criteria cri, @Param("membernum") int membernum);
 	public int getTotalCountMyBoard(@Param("cri") Criteria cri, @Param("membernum") int membernum);
+	
+	// 여기부터 관리자
+	// 모든 게시물 조회 - 모든 주소 포함
+	public List<BoardVO> getAllBoard(Criteria cri);
+	public int getAllBoardCount(Criteria cri);
 
 	
 }

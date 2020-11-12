@@ -65,7 +65,19 @@
 			where a.membernum = #{membernum})
 	</select>
 	
-
+	<delete id="removeBoardLikeMem" parameterType="int">
+		delete
+		from tbl_like
+		where membernum = #{membernum}
+	</delete>
+	
+	<delete id="removeBoardLikeBrd" parameterType="int">
+		delete
+		from tbl_like
+		where boardnum = #{boardnum}
+	</delete>
+	
+	
 	
 	
 	<!-- 게시물 조회 resultMap -->

@@ -11,24 +11,6 @@
 		where b.addressnum = #{addressnum}
 		order by sell desc, regdate desc
 	</select>
-	<!-- 
-	<select id="getListPagingBoard" parameterType="map" resultMap="board">
-		<![CDATA[
-		select boardnum, title, price, content, sell, readcnt, regdate, nickname, membernum
-		from(
-			select rownum rn, boardnum, title, price, content, sell, readcnt, regdate, nickname, membernum
-			from(
-				select rownum rn, a.boardnum, a.title, a.price, a.content, a.sell, a.readcnt, a.regdate, b.nickname, b.membernum
-				from tbl_board a join tbl_member b
-				on a.membernum = b.membernum
-				where b.addressnum = #{addressnum}
-				order by sell desc, boardnum desc)
-			where rownum <= #{cri.pageNum} * #{cri.amount})
-		where rn > (#{cri.pageNum} - 1) * #{cri.amount}
-		]]>
-	</select>
-	 -->
-	
 	<select id="getListPagingBoard" parameterType="map" resultMap="board">
 		<![CDATA[
 		select boardnum, title, price, content, sell, readcnt, regdate, replycnt, likecnt, nickname, membernum
@@ -43,7 +25,6 @@
 				order by sell desc, boardnum desc)
 			where 
 		]]>	
-			
 		<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
 			<foreach item="type" collection="cri.typeArr">
 				<trim prefix="OR">
@@ -54,17 +35,18 @@
 						<when test="type == 'C'.toString()">
 							content like '%'||#{cri.keyword}||'%'
 						</when>
+						<when test="type == 'N'.toString()">
+							nickname like '%'||#{keyword}||'%'
+						</when>
 					</choose>
 				</trim>
 			</foreach>	
 		</trim>
-		
 		<![CDATA[
 			rownum <= #{cri.pageNum} * #{cri.amount})
 		where rn > (#{cri.pageNum} - 1) * #{cri.amount}
 		]]>
 	</select>
-	
 	<select id="getTotalCountBoard" parameterType="map" resultType="int">
 		SELECT count(*)	
 		from(
@@ -82,6 +64,9 @@
 							<when test="type == 'C'.toString()">
 								content like '%'||#{cri.keyword}||'%'
 							</when>
+							<when test="type == 'N'.toString()">
+								nickname like '%'||#{keyword}||'%'
+							</when>
 						</choose>
 					</trim>
 				</foreach>	
@@ -97,7 +82,6 @@
 		where b.membernum = #{membernum}
 		order by sell desc, regdate desc
 	</select>
-	
 	<select id="getListPagingMyBoard" parameterType="map" resultMap="board">
 		<![CDATA[
 		select boardnum, title, price, sell, readcnt, likecnt, regdate, nickname, membernum
@@ -113,7 +97,6 @@
 		where rn > (#{cri.pageNum} - 1) * #{cri.amount}
 		]]>
 	</select>
-	
 	<select id="getTotalCountMyBoard" parameterType="map" resultType="int">
 		SELECT count(*)	
 		from(
@@ -122,7 +105,6 @@
 			on a.membernum = b.membernum
 			where b.membernum = #{membernum})
 	</select>
-	
 	
 	<!-- 게시물 상세 조회 -->
 	<select id="getDetailBoard" parameterType="int" resultMap="board">
@@ -137,7 +119,7 @@
 	
 	<!-- 게시물 조회 resultMap -->
 	<resultMap type="BoardVO" id="board">
-		<id column="boardnum" property="boardnum"></id>
+		<id column="boardnum" property="boardnum"/>
 		<result column="title" property="title"/>
 		<result column="price" property="price"/>
 		<result column="content" property="content"/>
@@ -208,5 +190,77 @@
 		where boardnum = #{boardnum}
 	</update>
 	
+	<!-- 여기부터 관리자 -->
+	<!-- 모든 게시물 조회 -->
+	<select id="getAllBoard" parameterType="Criteria" resultMap="board">
+	<![CDATA[
+		select boardnum, title, price, content, sell, readcnt, regdate, replycnt, likecnt, nickname, membernum
+		from(
+			select rownum rn, boardnum, title, price, content, sell, readcnt, regdate, replycnt, likecnt, nickname, membernum
+			from(
+				select rownum rn, a.boardnum, a.title, a.price, a.content, a.sell, a.readcnt, a.regdate, a.replycnt, a.likecnt, 
+				b.nickname, b.membernum
+				from tbl_board a join tbl_member b
+				on a.membernum = b.membernum
+				order by sell desc, boardnum desc)
+			where 
+		]]>	
+		<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'N'.toString()">
+							nickname like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>	
+		</trim>
+		<![CDATA[
+			rownum <= #{pageNum} * #{amount})
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 모든 게시물 수 조회 -->
+	<select id="getAllBoardCount" parameterType="Criteria" resultType="int">
+		SELECT count(*)	
+		from(
+			select a.boardnum, a.title, a.price, a.sell, a.readcnt, a.likecnt, a.regdate, b.nickname, b.membernum
+			from tbl_board a join tbl_member b
+			on a.membernum = b.membernum)
+			where
+			<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
+				<foreach item="type" collection="typeArr">
+					<trim prefix="OR">
+						<choose>
+							<when test="type == 'T'.toString()">
+								title like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'C'.toString()">
+								content like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'N'.toString()">
+								nickname like '%'||#{keyword}||'%'
+							</when>
+						</choose>
+					</trim>
+				</foreach>	
+			</trim>
+			boardnum > 0
+	</select>
 
+	<!-- 해당 회원의 게시글 삭제-->
+	<delete id="removeBoardMem" parameterType="int">
+		delete
+		from tbl_board
+		where membernum = #{membernum}
+	</delete>
+	
 </mapper>

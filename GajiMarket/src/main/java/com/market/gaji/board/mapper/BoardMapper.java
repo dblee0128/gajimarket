@@ -45,4 +45,15 @@ public interface BoardMapper {
 	public void updateReplyCnt(@Param("boardnum") int boardnum, @Param("amount") int amount);
 	
 	
+	// 여기부터 관리자
+	// 모든 게시물 조회 - 모든 주소 포함
+	public List<BoardVO> getAllBoard(Criteria cri);
+	public int getAllBoardCount(Criteria cri);
+	
+	
+	// 게시글 삭제 : 회원 번호
+	public void removeBoardMem(int membernum);
+
+	
+	
 }
