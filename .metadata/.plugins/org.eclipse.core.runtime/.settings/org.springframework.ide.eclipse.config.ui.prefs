@@ -1,7 +1,9 @@
 //com.springsource.config.ui.prefs.activePageIndex\:/GajiMarket/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml=<?xml version\="1.0" encoding\="UTF-8"?>\n<activePage index\="0"/>
 //com.springsource.config.ui.prefs.activePageIndex\:/GajiMarket/src/main/webapp/WEB-INF/spring/root-context.xml=<?xml version\="1.0" encoding\="UTF-8"?>\n<activePage index\="0"/>
+//com.springsource.config.ui.prefs.activePageIndex\:/GajiMarket/src/main/webapp/WEB-INF/spring/security-context.xml=<?xml version\="1.0" encoding\="UTF-8"?>\n<activePage index\="0"/>
 //com.springsource.config.ui.prefs.activePageIndex\:/ex05/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml=<?xml version\="1.0" encoding\="UTF-8"?>\n<activePage index\="0"/>
 //com.springsource.config.ui.prefs.activePageIndex\:/ex05/src/main/webapp/WEB-INF/spring/root-context.xml=<?xml version\="1.0" encoding\="UTF-8"?>\n<activePage index\="0"/>
+//com.springsource.config.ui.prefs.activePageIndex\:/ex06/src/main/webapp/WEB-INF/spring/security-context.xml=<?xml version\="1.0" encoding\="UTF-8"?>\n<activePage index\="0"/>
 //com.springsource.config.ui.prefs.activePageIndex\:/myboard3/src/main/resources/board-config.xml=<?xml version\="1.0" encoding\="UTF-8"?>\n<activePage index\="0"/>
 //com.springsource.config.ui.prefs.activePageIndex\:/myboard3/src/main/webapp/WEB-INF/spring/root-context.xml=<?xml version\="1.0" encoding\="UTF-8"?>\n<activePage index\="0"/>
 eclipse.preferences.version=1

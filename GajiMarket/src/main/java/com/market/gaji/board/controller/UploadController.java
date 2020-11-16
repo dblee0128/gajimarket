@@ -195,7 +195,7 @@ public class UploadController {
 	// 서버에서 첨부파일 삭제
 	@PostMapping("/deleteFile")
 	@ResponseBody
-	public ResponseEntity<String> deleteFile(String fileName, String type) {
+	public void deleteFile(String fileName, String type) {
 		log.info("deleteFile: " + fileName);
 		
 		File file;
@@ -217,10 +217,10 @@ public class UploadController {
 			}
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			//return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<String>("deleted", HttpStatus.OK);
+		//return new ResponseEntity<String>("deleted", HttpStatus.OK);
 	}
 	
 	

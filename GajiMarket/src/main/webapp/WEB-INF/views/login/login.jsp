@@ -7,46 +7,47 @@
 <head>
 <meta charset="UTF-8">
 <title>가지마켓</title>
-<link href="<c:url value="/resources/css/market.css"/>" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+<link href="<c:url value="/resources/css/test.css"/>" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400&display=swap" rel="stylesheet">
 </head>
 <body>
 <div id="wrap">
-	<div id="imgArea">
-		<img src="resources/img/gaji.png" width="400" height="400">
-	</div>
 
-	<div id="loginArea">
-		<h3>가까운 인천 지역구/군민들과의 마음 따뜻한 거래</h3>
-		<h1>가지마켓</h1>
-		<form:form action="/" method="post" modelAttribute="loginCmd">
-			<table>
+	<div class="loginArea">
+		<img src="/resources/img/logo2.jpeg" class="logo">
+		
+		<form:form action="/" method="post" modelAttribute="loginCmd" class="loginForm">
+			<table class="logintb">
 				<tr>
-					<td><form:input path="email" placeholder="이메일" autofocus="required"/></td>
+					<td><form:input path="email" placeholder="이메일" autofocus="required" class="inputLarge"/></td>
 				</tr>
 				<tr>
-					<td><form:errors path="email" id="error"/></td>
+					<td><form:errors path="email" class="errors"/></td>
 				</tr>
 				<tr>
-					<td><form:password path="password" placeholder="비밀번호"/></td>
+					<td><form:password path="password" placeholder="비밀번호" class="inputLarge"/></td>
 				</tr>
 				<tr>
-					<td><form:errors path="password" id="error"/></td>
+					<td><form:errors path="password" class="errors" /></td>
 				</tr>
 				<tr>
-					<td>${msg}</td>
+					<td class="errors">${msg}</td>
 				</tr>
 				<tr>
-					<td><input type="submit" value="로그인"></td>
+					<td><button type="submit" class="buttonLarge">로그인</button></td>
 				</tr>
-			</table>	
+			</table>
 		</form:form>
-		<a href="/findEmail"><button id="halfBtn">이메일 찾기</button></a>
-		<a href="/findPw"><button id="halfBtn">비밀번호 재설정</button></a><br>
-		<a href="/member/register"><button id="btn">회원가입</button></a>
+		
+		<div id="linkArea">
+			<a href="/findEmail" class="link">이메일 찾기</a>
+			<a href="/findPw" class="link">비밀번호 재설정</a>
+			<a href="/member/register" class="link">회원가입</a>
+		</div>
 		
 	</div>
+	
+<%@ include file="../includes/footer.jsp"%>
 </div>
-	<%@ include file="../includes/footer.jsp"%>
 </body>
 </html>

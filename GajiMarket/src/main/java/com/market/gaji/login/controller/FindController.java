@@ -5,6 +5,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,9 @@ public class FindController {
 	
 	@Autowired
 	protected JavaMailSender javaMailSender;
+	
+	@Autowired
+	BCryptPasswordEncoder pwEncoder; // 비밀번호 암호화
 	
 	
 	// 아이디 찾기
@@ -66,8 +70,8 @@ public class FindController {
 			tempPw += (char)((Math.random() * 26) + 97);
 		}
 		
-		check.setPassword(tempPw); // 임시 비밀번호 셋팅
-		memberService.modifyPwMember(check); // 임시 비밀번호로 변경
+		check.setPassword(pwEncoder.encode(tempPw)); // 암호화된 임시 비밀번호 셋팅
+		memberService.modifyPwMember(check); // 암호화된 임시 비밀번호로 변경
 		
 		try { // 셋팅해주기
 			msg.setSubject("가지마켓 임시 비밀번호 발급 메일입니다.");

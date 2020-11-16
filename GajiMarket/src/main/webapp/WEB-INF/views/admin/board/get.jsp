@@ -65,19 +65,19 @@
 		<div id="pagingArea">
 			<ul>
 				<c:if test="${pageMaker.prev}">
-					<li><a href="admin/board?pageNum=${pageMaker.startPage - 1}
+					<li><a href="board?pageNum=${pageMaker.startPage - 1}
 								&type=${pageMaker.cri.type}
 								&keyword=${pageMaker.cri.keyword}" id="link">이전</a></li>
 				</c:if>
 				
 				<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-					<li><a href="admin/board?pageNum=${num}
+					<li><a href="board?pageNum=${num}
 								&type=${pageMaker.cri.type}
 								&keyword=${pageMaker.cri.keyword}" id="link">${num}</a></li>
 				</c:forEach>
 				
 				<c:if test="${pageMaker.next}">
-					<li><a href="admin/board?pageNum=${pageMaker.endPage + 1}
+					<li><a href="board?pageNum=${pageMaker.endPage + 1}
 								&type=${pageMaker.cri.type}
 								&keyword=${pageMaker.cri.keyword}" id="link">다음</a></li>
 				</c:if>

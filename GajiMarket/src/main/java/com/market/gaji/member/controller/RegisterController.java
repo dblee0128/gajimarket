@@ -3,6 +3,7 @@ package com.market.gaji.member.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,9 @@ public class RegisterController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	BCryptPasswordEncoder pwEncoder; // 비밀번호 암호화
 	
 	// 회원가입
 	@RequestMapping(value="/register")
@@ -63,7 +67,12 @@ public class RegisterController {
 			
 		// 모든 조건이 만족할 경우
 		member.setEmail(registerCmd.getEmail());
-		member.setPassword(registerCmd.getPassword());
+		
+		String password = registerCmd.getPassword(); // 기존 비밀번호
+		String encryPassword = pwEncoder.encode(password); // 암호화된 비밀번호
+		member.setPassword(encryPassword); // 암호화한 비밀번호로 저장될 수 있게 변경
+		//member.setPassword(registerCmd.getPassword());
+		
 		member.setNickname(registerCmd.getNickname());
 		member.setPhone(registerCmd.getPhone());
 		member.setAddressnum(registerCmd.getAddressnum());

@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="deleteBtn"/>
+		<item key="selection" value=".title"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="deleteFun1"/>
-			<item value="updateFun1"/>
-			<item value="btnReplySave"/>
-			<item value="replyUL"/>
-			<item value="navbar"/>
-			<item value="navbar navbar"/>
-			<item value="navbar navbar-expand-md navbar-dark bg-dark"/>
-			<item value=".navbar navbar-expand-md navbar-dark bg-dark"/>
-			<item value="#navbar navbar-expand-md navbar-dark bg-dark"/>
-			<item value="jstl"/>
+			<item value=".title"/>
+			<item value="writetb"/>
+			<item value=".errors"/>
+			<item value=".error"/>
+			<item value="errors"/>
+			<item value="error"/>
+			<item value="buttonArea"/>
+			<item value="buttonAreㅁ"/>
+			<item value="mainCmt"/>
+			<item value="h3"/>
+			<item value="images"/>
+			<item value="images/"/>
+			<item value="background"/>
+			<item value="img"/>
+			<item value="id=&quot;link&quot;"/>
 		</list>
 		<list key="replacehistory">
+			<item value="class=&quot;link&quot;"/>
 			<item value="deleteBtn"/>
 			<item value="updateBtn"/>
 			<item value="registerBtn"/>
@@ -27,8 +33,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1004"/>
-		<item key="DIALOG_Y_ORIGIN" value="181"/>
+		<item key="DIALOG_X_ORIGIN" value="211"/>
+		<item key="DIALOG_Y_ORIGIN" value="150"/>
 		<item key="DIALOG_WIDTH" value="294"/>
 		<item key="DIALOG_HEIGHT" value="408"/>
 		<item key="DIALOG_FONT_NAME" value="1|.AppleSystemUIFont|11.0|0|COCOA|1|.AppleSystemUIFont"/>

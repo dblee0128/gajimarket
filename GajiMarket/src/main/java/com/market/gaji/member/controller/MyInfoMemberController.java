@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,9 @@ public class MyInfoMemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	BCryptPasswordEncoder pwEncoder; // 비밀번호 암호화
 	
 	// 내 정보 메인 페이지로 이동
 	@RequestMapping
@@ -55,7 +59,9 @@ public class MyInfoMemberController {
 		MemberVO member = memberService.getMember(email); // 입력한 정보를 가져오기 (email은 hidden으로 넘겨줄거야)
 		System.out.println("member: " + member);
 	
-		if(member.getPassword().equals(password)) { // 비밀번호가 일치하면
+		boolean pwMatch = pwEncoder.matches(password, member.getPassword());
+		
+		if(pwMatch == true) { // 비밀번호가 일치하면
 			memberService.removeMember(member.getMembernum());
 			memberService.deleteMember(email, password); // 삭제 진행
 			session.invalidate(); // 세션도 끊어주기
@@ -124,9 +130,11 @@ public class MyInfoMemberController {
 			return "/myInfo/member/modifyPw";
 		}
 		
-		// 2.DB의 비밀번호와 현재 비밀번호가 일치하지 않을 경우
 		MemberVO detail = memberService.getMember(member.getEmail());
-		if(!(changePwCmd.getCurrentPassword().equals(detail.getPassword()))) {
+		boolean pwMatch = pwEncoder.matches(changePwCmd.getCurrentPassword(), detail.getPassword());
+		
+		// 2.DB의 비밀번호와 현재 비밀번호가 일치하지 않을 경우
+		if(pwMatch == false) {
 			model.addAttribute("msg1", "현재 비밀번호가 일치하지 않습니다.");
 			return "/myInfo/member/modifyPw";
 		}
@@ -136,10 +144,10 @@ public class MyInfoMemberController {
 			model.addAttribute("msg2", "변경할 비밀번호가 일치하지 않습니다.");
 			return "/myInfo/member/modifyPw";
 		}
-		
+	
 		// 모든 조건이 만족할 경우
 		member.setEmail(changePwCmd.getEmail());
-		member.setPassword(changePwCmd.getPassword());
+		member.setPassword(pwEncoder.encode(changePwCmd.getPassword())); // 암호화해서 저장
 		memberService.modifyPwMember(member);
 		return "redirect:/myInfo";
 	}

@@ -1,7 +1,6 @@
 package com.market.gaji.notice.domain;
 
-import java.sql.Date;
-
+import java.util.Date;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;

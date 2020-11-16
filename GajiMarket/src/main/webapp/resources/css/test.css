@@ -11,7 +11,7 @@ html, body {
     height: 100%;
     position: relative;
     background-color: #fafafa;
-} 
+}
 
 #wrap .loginArea { 
     width: 500px;
@@ -72,6 +72,16 @@ html, body {
 	font-size: small;
 	color: #333333;
 	margin: 10px;
+}
+
+.logintb tr td {
+	border-style: none;	
+}
+
+
+.errors {
+	color: #8dacdf;
+	font-size: small;
 }
 
 #wrap .footerArea {

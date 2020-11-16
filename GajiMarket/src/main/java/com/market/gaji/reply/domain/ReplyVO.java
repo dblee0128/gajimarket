@@ -1,7 +1,6 @@
 package com.market.gaji.reply.domain;
 
-import java.sql.Date;
-
+import java.util.Date;
 import com.market.gaji.member.domain.MemberVO;
 
 public class ReplyVO {

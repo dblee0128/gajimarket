@@ -219,7 +219,6 @@ public class BoardController {
 		// 2. 유효성 검증 + 카테고리 선택 검증
 		if(bindingResult.hasErrors()) {
 			if(board.getCategorynum() == 0) {
-				model.addAttribute("msg", "카테고리를 선택해주세요.");
 				return "/board/modify";
 			} else if(board.getCategorynum() == 0) {
 				model.addAttribute("msg", "카테고리를 선택해주세요.");

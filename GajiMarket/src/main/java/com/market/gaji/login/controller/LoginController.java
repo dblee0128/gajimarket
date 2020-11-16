@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,9 @@ public class LoginController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	BCryptPasswordEncoder pwEncoder; // 비밀번호 암호화
 
 	// 세션으로 로그인, 로그아웃 구분
 	@RequestMapping(value="/") // 메인으로 들어왔을 때
@@ -42,33 +46,28 @@ public class LoginController {
 			return "login/login";
 		}
 		
-		MemberVO check = memberService.getMember(loginCmd.getEmail()); // check 변수에 해당 이메일의 정보 저장
+		MemberVO member = memberService.getMember(loginCmd.getEmail()); // 로그인에서 얻은 회원 정보
 		
-		if(check != null) { // 정보가 있다면 = 이메일 존재
-			// 비밀번호까지 일치한다면
-			System.out.println("come session?");
-			if(loginCmd.getPassword().equals(check.getPassword())) { // 사용자가 입력한 비밀번호와 DB에 저장된 비밀번호가 일치한다면 = 로그인 성공
-				// 로그인에 성공했을 때, 세션 발급해주기
-				session.setAttribute("email", check.getEmail());
-				session.setAttribute("nickname", check.getNickname());
-				session.setAttribute("membernum", check.getMembernum());
-				session.setAttribute("addressnum", check.getAddressnum());
-				session.setAttribute("isadmin", check.getIsadmin());
-				session.setAttribute("member", check);
-				
-				// 정보를 뷰로 뿌려주기
-				//model.addAttribute("email", check.getEmail());
-				//model.addAttribute("nickname", check.getNickname());
-				//model.addAttribute("membernum", check.getMembernum());
-				return "redirect:/board";
-			} else { // 이메일은 존재하나, 비밀번호가 일치하지 않는다면
-				model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
-				return "login/login"; // 로그인 페이지로 이동
-			}
-		} else { // 이메일 정보가 존재하지 않는다면
+		if(member == null) {
 			model.addAttribute("msg", "존재하지 않는 회원입니다.");
 			return "login/login";
 		}
+		
+		boolean pwMatch = pwEncoder.matches(loginCmd.getPassword(), member.getPassword()); // (실제 비번, 디비에 있는 암호화된 비번)
+		
+		if(member != null && pwMatch == true) {
+			session.setAttribute("email", member.getEmail());
+			session.setAttribute("nickname", member.getNickname());
+			session.setAttribute("membernum", member.getMembernum());
+			session.setAttribute("addressnum", member.getAddressnum());
+			session.setAttribute("isadmin", member.getIsadmin());
+			session.setAttribute("member", member);
+			return "redirect:/board";
+		} else if(member != null && pwMatch == false){
+			model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
+			return "login/login"; // 로그인 페이지로 이동
+		} 
+		return "redirect:/";
 	}
 	
 	// 로그아웃
