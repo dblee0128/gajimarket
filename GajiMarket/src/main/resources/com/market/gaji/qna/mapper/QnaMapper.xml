@@ -6,11 +6,11 @@
 	<!-- 전체 문의 목록 -->
 	<select id="getQnaList" parameterType="Criteria" resultMap="qna">
 		<![CDATA[
-		select qnanum, title, content, regdate, typename, nickname
+		select qnanum, title, content, regdate, typename, nickname, email
 		from(
-			select rownum rn, qnanum, title, content, regdate, typename, nickname
+			select rownum rn, qnanum, title, content, regdate, typename, nickname, email
 			from(
-				select a.qnanum, a.title, a.content, a.regdate, b.typename, c.nickname
+				select a.qnanum, a.title, a.content, a.regdate, b.typename, c.nickname, c.email
 				from tbl_qna a 
 				join tbl_qnatype b on a.typenum = b.typenum 
 				join tbl_member c on a.membernum = c.membernum
@@ -29,6 +29,12 @@
 						<when test="type == 'C'.toString()">
 							content like '%'||#{keyword}||'%'
 						</when>
+						<when test="type == 'N'.toString()">
+							nickname like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'Q'.toString()">
+							typename like '%'||#{keyword}||'%'
+						</when>
 					</choose>
 				</trim>
 			</foreach>	
@@ -44,7 +50,12 @@
 	<!-- 전체 문의 개수 -->
 	<select id="getCountQnaList" parameterType="Criteria" resultType="int">
 		select count(*)
-		from tbl_qna
+		from(
+			select a.qnanum, a.title, a.content, a.regdate, b.typename, c.nickname, c.email
+			from tbl_qna a 
+			join tbl_qnatype b on a.typenum = b.typenum 
+			join tbl_member c on a.membernum = c.membernum
+		)
 		where
 		<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
 			<foreach item="type" collection="typeArr">
@@ -56,6 +67,12 @@
 						<when test="type == 'C'.toString()">
 							content like '%'||#{keyword}||'%'
 						</when>
+						<when test="type == 'N'.toString()">
+							nickname like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'Q'.toString()">
+							typename like '%'||#{keyword}||'%'
+						</when>
 					</choose>
 				</trim>
 			</foreach>	
@@ -63,15 +80,26 @@
 		qnanum > 0
 	</select>
 	
+	<select id="getCountQna" resultType="int">
+		select count(*)
+		from tbl_qna
+	</select>
+	
 	
 	<!-- 문의 상세 조회 -->
 	<select id="getDetailQna" parameterType="int" resultMap="qna">
-		select a.qnanum, a.title, a.content, a.regdate, a.typenum, a.membernum, b.typename, c.nickname
+		select a.qnanum, a.title, a.content, a.regdate, a.typenum, a.membernum, b.typename, c.nickname, c.email
 		from tbl_qna a 
 		join tbl_qnatype b on a.typenum = b.typenum 
 		join tbl_member c on a.membernum = c.membernum
 		where a.qnanum = #{qnanum}
 		order by a.qnanum desc
+	</select>
+	
+	<select id="getCountMyQna" parameterType="int" resultType="int">
+		select count(*)
+		from tbl_qna
+		where membernum = #{membernum}
 	</select>
 	
 	<!-- 문의 등록 -->

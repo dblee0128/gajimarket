@@ -50,6 +50,16 @@ public class QnaServiceImpl implements QnaService {
 		return qnaMapper.getMyQnaList(membernum);
 	}
 
+	@Override
+	public int getCountMyQna(int membernum) {
+		return qnaMapper.getCountMyQna(membernum);
+	}
+
+	@Override
+	public int getCountQna() {
+		return qnaMapper.getCountQna();
+	}
+
 
 
 }

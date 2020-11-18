@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
-<%@ include file="../includes/header.jsp"%>
+<%@ include file="../../includes/header.jsp"%>
 <div id="container">
 	<div id="wrap">
 		<form:form action="register" method="post" modelAttribute="notice">
@@ -39,6 +39,6 @@
 		</form:form>
 	</div>
 </div>
-<%@ include file="../includes/footer.jsp"%>
+<%@ include file="../../includes/footer.jsp"%>
 </body>
 </html>

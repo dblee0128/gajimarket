@@ -24,6 +24,8 @@ import com.market.gaji.board.service.BoardLikeService;
 import com.market.gaji.board.service.BoardService;
 import com.market.gaji.member.domain.MemberVO;
 import com.market.gaji.member.service.MemberService;
+import com.market.gaji.notice.service.NoticeService;
+import com.market.gaji.qna.service.QnaService;
 
 @Controller
 public class AdminController {
@@ -37,10 +39,22 @@ public class AdminController {
 	@Autowired
 	private BoardLikeService likeService;
 	
+	@Autowired
+	private NoticeService noticeService;
+	
+	@Autowired
+	private QnaService qnaService;
+	
+	
 	// 관리자 메인 페이지로 이동
 	@RequestMapping(value="/admin")
-	public String adminMain() {
-		return "admin/adminMain";
+	public String adminMain(Model model) {
+		
+		model.addAttribute("memberCnt", memberService.getCountMember()); // 전체 회원 수
+		model.addAttribute("boardCnt", boardService.getCountBoard()); // 전체 게시글 수
+		model.addAttribute("noticeCnt", noticeService.getCountNotice()); // 전체 공지 수
+		model.addAttribute("qnaCnt", qnaService.getCountQna()); // 전체 문의 수
+		return "admin/admin";
 	}
 	
 	

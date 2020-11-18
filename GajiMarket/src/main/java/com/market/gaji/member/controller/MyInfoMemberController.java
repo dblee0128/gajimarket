@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.market.gaji.board.service.BoardLikeService;
+import com.market.gaji.board.service.BoardService;
 import com.market.gaji.member.domain.ChangePwCommand;
 import com.market.gaji.member.domain.MemberVO;
 import com.market.gaji.member.service.MemberService;
+import com.market.gaji.qna.service.QnaService;
 
 @Controller
 @SessionAttributes("member")
@@ -27,11 +30,30 @@ public class MyInfoMemberController {
 	private MemberService memberService;
 	
 	@Autowired
+	private BoardService boardService;
+	
+	@Autowired
+	private BoardLikeService likeService;
+	
+	@Autowired
+	private QnaService qnaService;
+	
+	@Autowired
 	BCryptPasswordEncoder pwEncoder; // 비밀번호 암호화
 	
 	// 내 정보 메인 페이지로 이동
 	@RequestMapping
-	public String myInfo() {
+	public String myInfo(HttpSession session, Model model) {
+		
+		int membernum = (int)session.getAttribute("membernum");
+		
+		// 1. 메인 페이지에 정보 뿌려주기
+		model.addAttribute("onSaleCnt", boardService.getOnSaleCountMyBoard(membernum));
+		model.addAttribute("salesComplCnt", boardService.getSalesCompletedCountMyBoard(membernum));
+		model.addAttribute("likeCnt", likeService.getCountMyBoardLike(membernum));
+		model.addAttribute("qnaCnt", qnaService.getCountMyQna(membernum));
+		
+		
 		return "/myInfo/myInfo";
 	}
 	

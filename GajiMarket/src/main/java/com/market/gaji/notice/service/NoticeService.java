@@ -28,4 +28,7 @@ public interface NoticeService {
 	// 공지글 전체 개수
 	public int getTotalCountNotice(Criteria cri);
 	
+	// 공지글 전체 개수
+	public int getCountNotice();
+	
 }

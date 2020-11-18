@@ -37,6 +37,9 @@ public interface MemberService {
 	// 전체 회원 수 - 관리자
 	public int getCountAllMember(Criteria cri);
 	
+	// 전체 회원 수
+	public int getCountMember();
+	
 	// 여기부터 관리자
 	// 회원 강제 탈퇴 기능 - 관리자
 	public void removeMember(int membernum);

@@ -39,8 +39,14 @@ public interface BoardMapper {
 	
 	// 나의 게시물 조회 - 페이징 처리
 	public List<BoardVO> getListPagingMyBoard(@Param("cri") Criteria cri, @Param("membernum") int membernum);
-	public int getTotalCountMyBoard(@Param("cri") Criteria cri, @Param("membernum") int membernum);
+	public int getTotalCountMyBoard(@Param("cri") Criteria cri, @Param("membernum") int membernum); // 전체 개수
 	
+	// 나의 게시물 개수 조회 (전체 개수, 판매중, 판매완료)
+	public int getSellCountMyBoard(int membernum);
+	public int getOnSaleCountMyBoard(int membernum);
+	public int getSalesCompletedCountMyBoard(int membernum);
+	
+
 	// 게시물당 댓글 개수 조회
 	public void updateReplyCnt(@Param("boardnum") int boardnum, @Param("amount") int amount);
 	
@@ -50,9 +56,11 @@ public interface BoardMapper {
 	public List<BoardVO> getAllBoard(Criteria cri);
 	public int getAllBoardCount(Criteria cri);
 	
-	
 	// 게시글 삭제 : 회원 번호
 	public void removeBoardMem(int membernum);
+	
+	// 전체 게시글 수
+	public int getCountBoard();
 
 	
 	

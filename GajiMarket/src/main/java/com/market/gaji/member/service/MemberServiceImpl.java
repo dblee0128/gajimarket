@@ -109,6 +109,11 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.changeAdminOrMember(isadmin, membernum);
 	}
 
+	@Override
+	public int getCountMember() {
+		return memberMapper.getCountMember();
+	}
+
 	
 	
 }

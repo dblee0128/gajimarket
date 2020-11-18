@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value=".title"/>
+		<item key="selection" value="name"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="name"/>
+			<item value="onSale"/>
+			<item value="salesCompl"/>
+			<item value=".salesCompl"/>
+			<item value=".onSale"/>
+			<item value=".maincmt p"/>
+			<item value=".ㅔ"/>
+			<item value="maincmt"/>
+			<item value="p"/>
+			<item value=". p"/>
 			<item value=".title"/>
 			<item value="writetb"/>
 			<item value=".errors"/>
 			<item value=".error"/>
 			<item value="errors"/>
-			<item value="error"/>
-			<item value="buttonArea"/>
-			<item value="buttonAreㅁ"/>
-			<item value="mainCmt"/>
-			<item value="h3"/>
-			<item value="images"/>
-			<item value="images/"/>
-			<item value="background"/>
-			<item value="img"/>
-			<item value="id=&quot;link&quot;"/>
 		</list>
 		<list key="replacehistory">
+			<item value="one"/>
+			<item value="two"/>
+			<item value=".two"/>
+			<item value=".one"/>
 			<item value="class=&quot;link&quot;"/>
 			<item value="deleteBtn"/>
 			<item value="updateBtn"/>

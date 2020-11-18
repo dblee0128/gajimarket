@@ -39,10 +39,18 @@ public interface BoardService {
 	public List<BoardVO> getListPagingMyBoard(@Param("cri") Criteria cri, @Param("membernum") int membernum);
 	public int getTotalCountMyBoard(@Param("cri") Criteria cri, @Param("membernum") int membernum);
 	
+	// 나의 게시물 개수 조회 (전체 개수, 판매중, 판매완료)
+	public int getSellCountMyBoard(int membernum);
+	public int getOnSaleCountMyBoard(int membernum);
+	public int getSalesCompletedCountMyBoard(int membernum);
+	
 	// 여기부터 관리자
 	// 모든 게시물 조회 - 모든 주소 포함
 	public List<BoardVO> getAllBoard(Criteria cri);
 	public int getAllBoardCount(Criteria cri);
+	
+	// 전체 게시글 수
+	public int getCountBoard();
 
 	
 }

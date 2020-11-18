@@ -18,6 +18,9 @@ public interface LikeMapper {
 	// 내가 좋아요한 게시물 반환값 (1,0)
 	public int getLikeOrDisLike(LikeVO likevo);
 	
+	// 내가 좋아요한 게시글 수
+	public int getCountMyBoardLike(int membernum);
+	
 	// 게시물에 관심 수 추가
 	public void updateBoardLike(int boardnum);
 	

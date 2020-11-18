@@ -50,6 +50,11 @@ public class BoardLikeServiceImpl implements BoardLikeService {
 	public int getMyBoardLikeCount(Criteria cri, int membernum) {
 		return likeMapper.getMyBoardLikeCount(cri, membernum);
 	}
+
+	@Override
+	public int getCountMyBoardLike(int membernum) {
+		return likeMapper.getCountMyBoardLike(membernum);
+	}
 	
 
 	

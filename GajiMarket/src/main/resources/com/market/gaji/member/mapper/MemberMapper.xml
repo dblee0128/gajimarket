@@ -115,6 +115,11 @@
 		membernum > 0
 	</select>
 	
+	<select id="getCountMember" resultType="int">
+		select count(*)
+		from tbl_member
+	</select>
+	
 	<resultMap type="MemberVO" id="member">
 		<id column="membernum" property="membernum"/>
 		<result column="email" property="email"/>

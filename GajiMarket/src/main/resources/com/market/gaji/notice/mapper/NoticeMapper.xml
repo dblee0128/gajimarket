@@ -92,6 +92,11 @@
 		noticenum > 0
 	</select>
 	
+	<select id="getCountNotice" resultType="int">
+		select count(*)
+		from tbl_notice
+	</select>
+	
 	<!-- 공지글 삭제 : 회원번호 -->
 	<delete id="removeNoticeMem" parameterType="int">
 		delete from tbl_notice

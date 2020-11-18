@@ -13,8 +13,14 @@ public interface QnaService {
 	// 전체 게시물 개수
 	public int getCountQnaList(Criteria cri);
 	
+	// 전체 문의 개수
+	public int getCountQna();
+	
 	// 문의 상세 조회
 	public QnaVO getDetailQna(int qnanum);
+	
+	// 나의 문의 개수
+	public int getCountMyQna(int membernum);
 
 	// 문의 등록
 	public void registerQna(QnaVO qna);

@@ -65,6 +65,13 @@
 			where a.membernum = #{membernum})
 	</select>
 	
+	<!-- 내가 좋아요한 게시글 수 -->
+	<select id="getCountMyBoardLike" parameterType="int" resultType="int">
+		select count(*) 
+		from tbl_like
+		where membernum = #{membernum}
+	</select>
+	
 	<delete id="removeBoardLikeMem" parameterType="int">
 		delete
 		from tbl_like

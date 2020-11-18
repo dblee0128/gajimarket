@@ -12,7 +12,7 @@
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.5.1.min.js"/>"></script>
 </head>
 <body>
-<%@ include file="../includes/header.jsp"%>
+<%@ include file="../../includes/header.jsp"%>
 <div id="container">
 	<div id="wrap">
 		<table id="board_tb">
@@ -89,7 +89,7 @@
 			<input type="hidden" name="keyword" value="<c:out value="${pageMaker.cri.keyword}"/>">
 		</form>
 		
-	<%@ include file="../includes/footer.jsp"%>	
+	<%@ include file="../../includes/footer.jsp"%>	
 	</div>	
 </div>	
 </body>

@@ -587,7 +587,12 @@ a.link:active {
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
-
+.detailBtnArea p {
+	font-size: 12px;
+	font-weight: lighter;
+	color: gray;
+	text-align: right;
+}
 
 
 /* 공통 */

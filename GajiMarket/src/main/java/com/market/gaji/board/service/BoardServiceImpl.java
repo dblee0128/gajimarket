@@ -122,5 +122,26 @@ public class BoardServiceImpl implements BoardService {
 	public int getAllBoardCount(Criteria cri) {
 		return boardMapper.getAllBoardCount(cri);
 	}
+
+	@Override
+	public int getSellCountMyBoard(int membernum) {
+		return boardMapper.getSellCountMyBoard(membernum);
+	}
+
+	@Override
+	public int getOnSaleCountMyBoard(int membernum) {
+		return boardMapper.getOnSaleCountMyBoard(membernum);
+	}
+
+	@Override
+	public int getSalesCompletedCountMyBoard(int membernum) {
+		// TODO Auto-generated method stub
+		return boardMapper.getSalesCompletedCountMyBoard(membernum);
+	}
+
+	@Override
+	public int getCountBoard() {
+		return boardMapper.getCountBoard();
+	}
 	
 }

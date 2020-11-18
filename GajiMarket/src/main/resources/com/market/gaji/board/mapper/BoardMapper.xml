@@ -106,6 +106,24 @@
 			where b.membernum = #{membernum})
 	</select>
 	
+	<select id="getSellCountMyBoard" parameterType="int" resultType="int">
+		select count(*)
+		from tbl_board
+		where membernum = #{membernum}
+	</select>
+	
+	<select id="getOnSaleCountMyBoard" resultType="int">
+		select count(*)
+		from tbl_board
+		where membernum = #{membernum} and sell = '판매중'
+	</select>
+	
+	<select id="getSalesCompletedCountMyBoard" resultType="int">
+		select count(*)
+		from tbl_board
+		where membernum = #{membernum} and sell = '판매완료'
+	</select>
+	
 	<!-- 게시물 상세 조회 -->
 	<select id="getDetailBoard" parameterType="int" resultMap="board">
 		select a.boardnum, a.title, a.price, a.content, a.sell, a.readcnt, a.likecnt, a.regdate, 
@@ -262,5 +280,10 @@
 		from tbl_board
 		where membernum = #{membernum}
 	</delete>
+	
+	<select id="getCountBoard" resultType="int">
+		select count(*)
+		from tbl_board
+	</select>
 	
 </mapper>

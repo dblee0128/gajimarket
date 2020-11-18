@@ -43,6 +43,9 @@ public interface MemberMapper {
 	// 전체 회원 수 - 관리자
 	public int getCountAllMember(Criteria cri);
 	
+	// 전체 회원 수
+	public int getCountMember();
+	
 	// 전체 관리자 조회 - 관리자
 	public List<MemberVO> getListAdmin(Criteria cri);
 	

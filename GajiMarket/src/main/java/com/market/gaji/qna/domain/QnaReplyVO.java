@@ -1,6 +1,6 @@
 package com.market.gaji.qna.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 import com.market.gaji.member.domain.MemberVO;
 

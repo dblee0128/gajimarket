@@ -28,8 +28,12 @@ public interface NoticeMapper {
 	// 공지글 전체 개수
 	public int getTotalCountNotice(Criteria cri);
 	
+	// 공지글 전체 개수
+	public int getCountNotice();
+	
 	// 게시글 삭제 - 회원번호
 	public void removeNoticeMem(int membernum);
+	
 	
 
 }
