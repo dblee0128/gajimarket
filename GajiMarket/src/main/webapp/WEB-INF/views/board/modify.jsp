@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>가지마켓</title>
-<link href="<c:url value="/resources/css/includes.css"/>" rel="stylesheet">
+<link href="<c:url value="/resources/css/board.css"/>" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -55,13 +55,13 @@
 						<td class="cmt">제목</td>	
 						<td><form:input path="title" placeholder="제목을 입력하세요." class="writeInput"/></td>
 					</tr>
-					<tr><td colspan="2"><form:errors path="title" class="errors"/></td></tr>
+					<tr><td colspan="2" class="errors"><form:errors path="title"/></td></tr>
 					
 					<tr>
 						<td class="cmt">가격</td>
 						<td><form:input path="price" placeholder="가격을 입력하세요." class="writeInput"/></td>
 					</tr>
-					<tr><td colspan="2"><form:errors path="price" class="errors"/></td></tr>
+					<tr><td colspan="2" class="errors"><form:errors path="price"/></td></tr>
 					
 					
 					<tr>
@@ -70,7 +70,7 @@
 							<form:textarea path="content" cols="80" rows="20" placeholder="내용을 입력하세요." class="writeTextArea"/>
 						</td>
 					</tr>
-					<tr><td colspan="2"><form:errors path="content" class="errors"/></td></tr>
+					<tr><td colspan="2" class="errors"><form:errors path="content"/></td></tr>
 					
 					<tr>
 						<td class="cmt">카테고리</td>

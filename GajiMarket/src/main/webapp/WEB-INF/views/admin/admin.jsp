@@ -30,6 +30,10 @@
 				</div>
 				
 				<div class="count">
+					<div class="one">
+						<p class="cmt"><a href="/admin/member">관리자</a><p>
+						<p class="num"><a href="/admin/member">${adminCnt}</a></p>
+					</div>
 					<div class="two">
 						<p class="cmt"><a href="/admin/member">회원</a><p>
 						<p class="num"><a href="/admin/member">${memberCnt}</a></p>

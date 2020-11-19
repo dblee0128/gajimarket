@@ -37,20 +37,24 @@ public interface MemberMapper {
 	
 	// 여기부터 관리자
 	
-	// 전체 회원 조회 - 관리자
+	// 전체 회원 조회
 	public List<MemberVO> getListMember(Criteria cri);
 	
-	// 전체 회원 수 - 관리자
+	// 전체 회원 수 - 페이징
 	public int getCountAllMember(Criteria cri);
 	
 	// 전체 회원 수
 	public int getCountMember();
 	
-	// 전체 관리자 조회 - 관리자
+	// 전체 관리자 조회
 	public List<MemberVO> getListAdmin(Criteria cri);
 	
-	// 전체 관리자 수 - 관리자
+	// 전체 관리자 수 - 페이징
 	public int getCountAllAdmin(Criteria cri);
+	
+	// 전체 관리자 수 
+	public int getCountAdmin();
+	
 	
 	// 회원 강제 탈퇴 기능 - 관리자
 	public void removeMember(int membernum); // 미해결

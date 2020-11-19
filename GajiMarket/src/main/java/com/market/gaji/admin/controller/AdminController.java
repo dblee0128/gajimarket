@@ -48,18 +48,24 @@ public class AdminController {
 	
 	// 관리자 메인 페이지로 이동
 	@RequestMapping(value="/admin")
-	public String adminMain(Model model) {
+	public String adminMain(HttpSession session, Model model) {
+		
+		// 1. 관리자 로그인 여부 확인 : isadmin이 0이면 돌려보내라
+		int isadmin = (int)session.getAttribute("isadmin");
+		if(isadmin == 0) { return "redirect:/"; }
 		
 		model.addAttribute("memberCnt", memberService.getCountMember()); // 전체 회원 수
+		model.addAttribute("adminCnt", memberService.getCountAdmin()); // 전체 관리자 수
 		model.addAttribute("boardCnt", boardService.getCountBoard()); // 전체 게시글 수
 		model.addAttribute("noticeCnt", noticeService.getCountNotice()); // 전체 공지 수
 		model.addAttribute("qnaCnt", qnaService.getCountQna()); // 전체 문의 수
+		
 		return "admin/admin";
 	}
 	
 	
 	// 회원 관리 
-	// 전체 회원 조회
+	// 전체 회원 조회 (일반)
 	@RequestMapping(value="/admin/member")
 	public String getListMember(Criteria cri, HttpSession session, Model model) {
 		
@@ -77,6 +83,7 @@ public class AdminController {
 		
 		return "admin/member/get";
 	}
+	
 	
 	// 상세 회원 조회
 	@RequestMapping(value="/admin/member/{membernum}")

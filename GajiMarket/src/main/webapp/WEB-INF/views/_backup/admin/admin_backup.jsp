@@ -12,9 +12,21 @@
 </head>
 <body>
 	<%@ include file="../../includes/header.jsp"%>
-	<h3 align="center">탈퇴가 완료되었습니다.<br>
-	그동안 가지마켓을 이용해주셔서 감사합니다.</h3>
-	<a href="/"><button>확인</button></a>
+	<h3 align="center">가지마켓에서의<br>활동 내역 및 회원 정보를 관리하세요.</h3>
+	<table>
+		<tr>
+			<td><a href="/admin/member" style="color: black;"><button>회원 관리</button></a></td>
+		</tr>
+		<tr>
+			<td><a href="/admin/board" style="color: black;"><button>게시물 관리</button></a></td>
+		</tr>
+		<tr>
+			<td><a href="/notice" style="color: black;"><button>공지사항 관리</button></a></td>
+		</tr>
+		<tr>
+			<td><a href="/admin/qna" style="color: black;"><button>문의 내역</button></a></td>
+		</tr>
+	</table>
 	<%@ include file="../../includes/footer.jsp"%>
 </body>
 </html>

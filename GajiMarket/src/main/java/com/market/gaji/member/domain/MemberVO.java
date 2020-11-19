@@ -1,6 +1,6 @@
 package com.market.gaji.member.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.validation.constraints.Pattern;
 

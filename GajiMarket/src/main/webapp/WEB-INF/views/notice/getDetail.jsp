@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>가지마켓</title>
-<link href="<c:url value="/resources/css/includes.css"/>" rel="stylesheet">
+<link href="<c:url value="/resources/css/board.css"/>" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -43,7 +43,7 @@
 					<button>수정</button></a>
 					
 					<a href="/notice/delete/${notice.noticenum}">
-					<button onclick="deleteCheck()">삭제</button></a><br>${msg}
+					<button id="deleteBtn">삭제</button></a><br>${msg}
 				</c:if>
 			</div>
 		</div>
@@ -63,13 +63,16 @@
 
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.5.1.min.js"/>"></script>
 <script>
-function deleteCheck() {
-	if(confirm('정말 삭제하시겠습니까?') == true) {
-		alert('게시글이 삭제되었습니다.');
-	} else if(confirm('정말 삭제하시겠습니까?') == false) {
-		return false;
-	}
-}
+$(document).ready(function(){
+	$("#deleteBtn").on("click", function(){
+	
+		if(confirm("정말 삭제하시겠습니까?") == true){
+			alert('공지사항이 삭제되었습니다.');
+		} else {
+			return false;
+		}
+	})
+})
 </script>
 </body>
 </html>

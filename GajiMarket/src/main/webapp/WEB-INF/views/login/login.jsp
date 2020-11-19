@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>가지마켓</title>
-<link href="<c:url value="/resources/css/test.css"/>" rel="stylesheet">
+<link href="<c:url value="/resources/css/login.css"/>" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -22,13 +22,13 @@
 					<td><form:input path="email" placeholder="이메일" autofocus="required" class="inputLarge"/></td>
 				</tr>
 				<tr>
-					<td><form:errors path="email" class="errors"/></td>
+					<td class="errors"><form:errors path="email"/></td>
 				</tr>
 				<tr>
 					<td><form:password path="password" placeholder="비밀번호" class="inputLarge"/></td>
 				</tr>
 				<tr>
-					<td><form:errors path="password" class="errors" /></td>
+					<td class="errors"><form:errors path="password"/></td>
 				</tr>
 				<tr>
 					<td class="errors">${msg}</td>

@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>가지마켓</title>
-<link href="<c:url value="/resources/css/includes.css"/>" rel="stylesheet">
+<link href="<c:url value="/resources/css/board.css"/>" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -23,12 +23,13 @@
 		</div>
 		<!-- 검색 영역 -->
 		<div class="searchArea">
-			<form action="/admin/qna" method="get" class="searchForm">
+			<form action="/admin/board" method="get" class="searchForm">
 				<select name="type" class="selectBox">
 					<option value="" <c:out value="${pageMaker.cri.type == null? 'selected':''}"/>>선택</option>
 					<option value="T" <c:out value="${pageMaker.cri.type eq 'T'? 'selected':''}"/>>제목</option>
 					<option value="C" <c:out value="${pageMaker.cri.type eq 'C'? 'selected':''}"/>>내용</option>
 					<option value="N" <c:out value="${pageMaker.cri.type eq 'N'? 'selected':''}"/>>작성자</option>
+					<option value="A" <c:out value="${pageMaker.cri.type eq 'A'? 'selected':''}"/>>주소</option>
 					<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'? 'selected':''}"/>>제목/내용</option>
 				</select>
 				<input type="text" name="keyword" class="inputSearch" value="${pageMaker.cri.keyword}">

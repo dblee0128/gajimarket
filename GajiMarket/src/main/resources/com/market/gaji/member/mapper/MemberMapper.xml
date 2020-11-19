@@ -52,7 +52,7 @@
 				select a.membernum, a.email, a.password, a.nickname, a.phone, a.regdate, a.addressnum, a.isadmin, b.addressname
 				from tbl_member a
 				join tbl_address b on a.addressnum = b.addressnum
-				order by a.isadmin desc
+				order by a.isadmin desc, membernum desc
 				)
 			where 
 		]]>
@@ -118,6 +118,17 @@
 	<select id="getCountMember" resultType="int">
 		select count(*)
 		from tbl_member
+		where isadmin = 0
+	</select>
+	
+	
+	
+	
+	
+	<select id="getCountAdmin" resultType="int">
+		select count(*)
+		from tbl_member
+		where isadmin = 1
 	</select>
 	
 	<resultMap type="MemberVO" id="member">

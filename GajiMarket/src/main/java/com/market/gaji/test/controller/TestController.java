@@ -18,7 +18,7 @@ public class TestController {
 	
 	@RequestMapping("head")
 	public String head() {
-		return "includes/header2";
+		return "includes/header";
 	}
 	
 	@RequestMapping("test2")

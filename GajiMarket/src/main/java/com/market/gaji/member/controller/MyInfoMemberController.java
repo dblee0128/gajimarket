@@ -87,7 +87,7 @@ public class MyInfoMemberController {
 			memberService.removeMember(member.getMembernum());
 			memberService.deleteMember(email, password); // 삭제 진행
 			session.invalidate(); // 세션도 끊어주기
-			return "/myInfo/member/deleteSuccess";
+			return "redirect:/";
 		} else { // 비밀번호가 일치하지 않으면
 			model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
 			return "/myInfo/member/delete";

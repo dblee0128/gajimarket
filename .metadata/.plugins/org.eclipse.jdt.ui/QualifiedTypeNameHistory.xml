@@ -55,9 +55,9 @@
 <fullyQualifiedTypeName name="com.market.gaji.board.service.BoardService"/>
 <fullyQualifiedTypeName name="com.market.gaji.board.service.BoardLikeService"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ModelAttribute"/>
-<fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="com.market.gaji.notice.mapper.NoticeMapper"/>
 <fullyQualifiedTypeName name="com.market.gaji.notice.service.NoticeService"/>
 <fullyQualifiedTypeName name="com.market.gaji.qna.service.QnaService"/>
 <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
 </qualifiedTypeNameHistroy>

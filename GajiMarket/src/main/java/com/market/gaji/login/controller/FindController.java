@@ -41,8 +41,9 @@ public class FindController {
 			model.addAttribute("msg1", "일치하는 회원 정보가 없습니다.");
 			return "login/findEmail";
 		}
-		model.addAttribute("msg2", "가입하신 이메일: ");
+		model.addAttribute("msg2", "가입하신 이메일은 ");
 		model.addAttribute("email", member.getEmail());
+		model.addAttribute("msg3", " 입니다.");
 		return "login/findEmail";
 	}
 	

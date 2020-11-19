@@ -12,36 +12,34 @@
 </head>
 <body>
 	<%@ include file="../../includes/header.jsp"%>
-	<h3 align="center">나의 정보를 확인하고 수정하세요.</h3>
-		<div id="registerArea">
+	<h3 align="center">비밀번호가 기억나지 않는다면<br>가입 시 등록한 이메일을 입력해주세요.<br>
+					   해당 이메일로 비밀번호 재설정 가능한 링크를 보내드립니다.</h3>
+	<div id="registerArea">
+		<form action="findPw" method="post">
 			<table>
 				<tr>
 					<td>
-						<label>이메일</label><br>
-						${member.email}
-					<td>
-				</tr>
-				<tr>
-					<td>
-						<label>별명</label><br>
-						${member.nickname}
+						<input type="text" name="email" placeholder="이메일">
 					</td>
 				</tr>
 				<tr>
-					<td>
-						<label>핸드폰 번호</label><br>
-						${member.phone}
-					</td>
+					<td id="error">${msg1}</td>
+				</tr>
+				<tr>
+					<td id="error">${msg2}</td>
 				</tr>
 				<tr>
 					<td>
-						<label>주소</label><br>
-						${member.address.addressname}
+						<input type="submit" value="비밀번호 재설정">
 					</td>
 				</tr>
 			</table>
-			
+		</form>
+		<div id="buttonArea">
+			<a href="/"><button id="halfBtn">로그인</button></a>
+			<a href="/member/register"><button id="halfBtn">회원가입</button></a>
 		</div>
+	</div>
 	<%@ include file="../../includes/footer.jsp"%>
 </body>
 </html>

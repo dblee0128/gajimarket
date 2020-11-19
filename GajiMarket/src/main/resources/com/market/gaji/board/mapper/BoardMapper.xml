@@ -212,14 +212,15 @@
 	<!-- 모든 게시물 조회 -->
 	<select id="getAllBoard" parameterType="Criteria" resultMap="board">
 	<![CDATA[
-		select boardnum, title, price, content, sell, readcnt, regdate, replycnt, likecnt, nickname, membernum
+		select boardnum, title, price, content, sell, readcnt, regdate, replycnt, likecnt, nickname, membernum, addressname
 		from(
-			select rownum rn, boardnum, title, price, content, sell, readcnt, regdate, replycnt, likecnt, nickname, membernum
+			select rownum rn, boardnum, title, price, content, sell, readcnt, regdate, replycnt, likecnt, nickname, membernum, addressname
 			from(
 				select rownum rn, a.boardnum, a.title, a.price, a.content, a.sell, a.readcnt, a.regdate, a.replycnt, a.likecnt, 
-				b.nickname, b.membernum
-				from tbl_board a join tbl_member b
-				on a.membernum = b.membernum
+				b.nickname, b.membernum, c.addressname
+				from tbl_board a 
+				join tbl_member b on a.membernum = b.membernum
+				join tbl_address c on b.addressnum = c.addressnum
 				order by sell desc, boardnum desc)
 			where 
 		]]>	
@@ -236,6 +237,9 @@
 						<when test="type == 'N'.toString()">
 							nickname like '%'||#{keyword}||'%'
 						</when>
+						<when test="type == 'A'.toString()">
+							addressname like '%'||#{keyword}||'%'
+						</when>
 					</choose>
 				</trim>
 			</foreach>	
@@ -250,9 +254,10 @@
 	<select id="getAllBoardCount" parameterType="Criteria" resultType="int">
 		SELECT count(*)	
 		from(
-			select a.boardnum, a.title, a.price, a.sell, a.readcnt, a.likecnt, a.regdate, b.nickname, b.membernum
-			from tbl_board a join tbl_member b
-			on a.membernum = b.membernum)
+			select a.boardnum, a.title, a.price, a.sell, a.readcnt, a.likecnt, a.regdate, b.nickname, b.membernum, c.addressname
+			from tbl_board a 
+			join tbl_member b on a.membernum = b.membernum
+			join tbl_address c on b.addressnum = c.addressnum)
 			where
 			<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
 				<foreach item="type" collection="typeArr">
@@ -266,6 +271,9 @@
 							</when>
 							<when test="type == 'N'.toString()">
 								nickname like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'A'.toString()">
+								addressname like '%'||#{keyword}||'%'
 							</when>
 						</choose>
 					</trim>

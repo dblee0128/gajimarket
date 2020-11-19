@@ -114,6 +114,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.getCountMember();
 	}
 
+	@Override
+	public int getCountAdmin() {
+		return memberMapper.getCountAdmin();
+	}
+
 	
 	
 }
