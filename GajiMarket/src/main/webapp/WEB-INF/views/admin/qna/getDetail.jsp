@@ -62,6 +62,7 @@
 			<a href="/admin/qna?pageNum=${cri.pageNum}&amount=${cri.amount}&type=${cri.type}&keyword=${cri.keyword}">
 			<button class="buttonMedium">목록</button></a>
 		</div>
+	<%@ include file="../../includes/footer.jsp"%>
 	</div>
 	
 	<!-- /myInfo/qna/modify라는 요청이 들어왔을 때 각각의 값을 보내준다  -->
@@ -73,7 +74,7 @@
 		<input type="hidden" name="type" value="<c:out value="${cri.type}"/>">
 	</form>
 	
-<%@ include file="../../includes/footer.jsp"%>
+
 </div>
 
 
@@ -95,27 +96,30 @@ $(document).ready(function(){
 
 <script>
 // 전체 댓글 목록
-function showList(boardnum, replyList) {
+function showList(qnanum, replyList) {
 	
 	var nickname = '<c:out value="${nickname}"/>'; // 세션에서 별명 가져오기
+	console.log(nickname);
 
-	replyService.getList({boardnum: boardnum}, function(list){
+	replyService.getList({qnanum: qnanum}, function(list){
 		var str = "";
+		
 		if(list == null || list.length == 0) {
 			replyList.html("");
 			return;
 		}
+		
 		for(var i = 0, len = list.length || 0; i < len; i++) {
 			var writer = list[i].member.nickname; // writer에 별명 저장
 			
-			str += "<div class='replyList' id='reply" + list[i].replynum + "' data-rno='" + list[i].replynum + "'>";
+			str += "<div class='replyList' id='reply" + list[i].qnareplynum + "' data-rno='" + list[i].qnareplynum + "'>";
 			str += "<span>" + list[i].member.nickname;
 			if(writer == nickname){ // 수정과 삭제 버튼은 댓글 작성자와 이름이 같은 경우에만 출력되도록 함
-			str += "<a href=\"javascript:void(0)\" onClick=\"updateFun1("+list[i].replynum+",'"+list[i].reply+"','"+list[i].member.nickname+"')\" class='replylink'>&nbsp;&nbsp;수정</a>";
-			str += "&nbsp;&nbsp;<a href=\"javascript:void(0)\" onClick=\"deleteFun1("+list[i].replynum+")\" class='replylink'>삭제</a></span>";
+			str += "<a href=\"javascript:void(0)\" onClick=\"updateFun1("+list[i].qnareplynum+",'"+list[i].qnareply+"','"+list[i].member.nickname+"')\" class='replylink'>&nbsp;&nbsp;수정</a>";
+			str += "&nbsp;&nbsp;<a href=\"javascript:void(0)\" onClick=\"deleteFun1("+list[i].qnareplynum+")\" class='replylink'>삭제</a></span>";
 			}
 			str += "&nbsp;&nbsp;<span class='time'>"+ replyService.displayTime(list[i].regdate) + "</span>";
-			str += "<p>" + list[i].reply + "</p>";
+			str += "<p>" + list[i].qnareply + "</p>";
 			str += "<hr><br>";
 			str += "";
 			str += "</div>";
@@ -129,19 +133,20 @@ function showList(boardnum, replyList) {
 // 댓글 삭제
 function deleteFun1(no){
 	console.log(no);
-	var boardnum = '<c:out value="${board.boardnum}"/>';
+	
+	var qnanum = '<c:out value="${qna.qnanum}"/>';
 	var replyList = $(".replyArea");
 	
 	
 	if(confirm("정말 삭제하시겠습니까?") == true) {
 		$.ajax({
 			type: 'delete',
-			url: '/reply/' + no,
+			url: '/qnaReply/' + no,
 			success: function(deleteResult) {
-				showList(boardnum, replyList);
+				showList(qnanum, replyList);
 			},
 			error: function(xhr, status, er) {
-				console.log("error "+er);
+				console.log("error " + er);
 			}
 			
 		});
@@ -154,7 +159,7 @@ function deleteFun1(no){
 // 댓글 수정
 function updateFun1(no,content,name){
 	console.log("Edit = "+no);
-	var boardnum = '<c:out value="${board.boardnum}"/>';
+	var qnanum = '<c:out value="${qna.qnanum}"/>';
 	var replyList = $(".replyArea");
 	
 	var editform = "";
@@ -170,19 +175,20 @@ function updateFun1(no,content,name){
 
 function updateFun2(no){
 	console.log("delete = ");
-	var boardnum = '<c:out value="${board.boardnum}"/>';
+	var qnanum = '<c:out value="${qna.qnanum}"/>';
 	var replyList = $(".replyArea");
 	
 	var editContent = $('#editreply'+no).val();
-	var paramData = JSON.stringify({"reply":editContent});
+	var paramData = JSON.stringify({"qnareply": editContent});
 	//console.log(editContent);
+	
 	$.ajax({
 		type: 'put',
-		url: '/reply/' + no,
+		url: '/qnaReply/' + no,
 		data: paramData,
 		contentType: "application/json; charset=utf-8",
 		success: function(result) {
-			showList(boardnum, replyList);
+			showList(qnanum, replyList);
 		},
 		error: function(xhr, status, er) {
 			console.log("error = "+er+" / "+status+" / "+xhr);
@@ -196,10 +202,10 @@ function updateFun2(no){
 $(document).ready(function(){ // 화면이 로드되는 순간 나와야할 것들
 
 	// 전체 댓글 조회
-	var boardnum = '<c:out value="${board.boardnum}"/>'; // 게시글 번호
+	var qnanum = '<c:out value="${qna.qnanum}"/>'; // 문의글 번호
 	var replyList = $(".replyArea"); // 댓글 리스트가 담길 영역
 	
-	showList(boardnum, replyList); // 리스트를 뿌려주는 함수 호출
+	showList(qnanum, replyList); // 리스트를 뿌려주는 함수 호출
 	
 	
 	// 댓글 추가
@@ -208,18 +214,18 @@ $(document).ready(function(){ // 화면이 로드되는 순간 나와야할 것�
 	$("#registerBtn").on("click", function(){ // 게시글 등록 버튼을 누르면
 	
 		var reply = {
-				reply: $("#reply").val(), // <textarea>의 값 가져오기
-				boardnum: boardnum,
+				qnareply: $("#reply").val(), // <textarea>의 값 가져오기
+				qnanum: qnanum,
 				membernum: membernum
 		};
 		
 		$.ajax({
 			type: 'post',
-			url: '/reply/new',
+			url: '/qnaReply/new',
 			data: JSON.stringify(reply),
 			contentType: "application/json; charset=utf-8",
 			success: function(result, status, xhr) {
-				showList(boardnum, replyList); // 성공하면 리스트를 보여줘
+				showList(qnanum, replyList); // 성공하면 리스트를 보여줘
 				$('#reply').val(''); // 그리고 쓴 내용을 지워줘
 			},
 			error: function(xhr, status, er) {

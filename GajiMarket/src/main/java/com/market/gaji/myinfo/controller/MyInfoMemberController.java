@@ -1,4 +1,4 @@
-package com.market.gaji.member.controller;
+package com.market.gaji.myinfo.controller;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -45,9 +45,15 @@ public class MyInfoMemberController {
 	@RequestMapping
 	public String myInfo(HttpSession session, Model model) {
 		
+		// 1. 로그인 여부 체크: 세션에 membernum이 있는지 확인
+		String email = (String)session.getAttribute("email");
+		if(email == null) {
+			return "redirect:/";
+		}
+		
 		int membernum = (int)session.getAttribute("membernum");
 		
-		// 1. 메인 페이지에 정보 뿌려주기
+		// 2. 메인 페이지에 정보 뿌려주기
 		model.addAttribute("onSaleCnt", boardService.getOnSaleCountMyBoard(membernum));
 		model.addAttribute("salesComplCnt", boardService.getSalesCompletedCountMyBoard(membernum));
 		model.addAttribute("likeCnt", likeService.getCountMyBoardLike(membernum));
@@ -60,6 +66,13 @@ public class MyInfoMemberController {
 	// 회원 정보 조회
 	@RequestMapping(value="/member/get")
 	public String getDetailMyInfo(HttpSession session, Model model) {
+		
+		// 1. 로그인 여부 체크: 세션에 membernum이 있는지 확인
+		int membernum = (int)session.getAttribute("membernum");
+		if(membernum == 0) {
+			return "redirect:/";
+		}
+		
 		MemberVO member = memberService.getMember((String)session.getAttribute("email")); // 세션을 이용해서 값 가져오기
 		model.addAttribute("member", member);
 		return "/myInfo/member/get";
@@ -68,6 +81,13 @@ public class MyInfoMemberController {
 	// 회원 탈퇴
 	@RequestMapping(value="/member/delete")
 	public String deleteMember(HttpSession session, Model model) {
+		
+		// 1. 로그인 여부 체크: 세션에 membernum이 있는지 확인
+		int membernum = (int)session.getAttribute("membernum");
+		if(membernum == 0) {
+			return "redirect:/";
+		}
+		
 		String email = (String)session.getAttribute("email");
 		String nickname = (String)session.getAttribute("nickname");
 		model.addAttribute("email", email);
@@ -77,6 +97,12 @@ public class MyInfoMemberController {
 	
 	@RequestMapping(value="/member/delete", method=RequestMethod.POST)
 	public String deleteMember(String email, String password, HttpSession session, Model model) {
+		
+		// 1. 로그인 여부 체크: 세션에 membernum이 있는지 확인
+		int membernum = (int)session.getAttribute("membernum");
+		if(membernum == 0) {
+			return "redirect:/";
+		}
 		
 		MemberVO member = memberService.getMember(email); // 입력한 정보를 가져오기 (email은 hidden으로 넘겨줄거야)
 		System.out.println("member: " + member);
@@ -98,6 +124,13 @@ public class MyInfoMemberController {
 	// 회원 정보 수정 - 주소, 핸드폰 번호 수정
 	@RequestMapping(value="/member/modify")
 	public String modifyMember(HttpSession session, Model model) {
+		
+		// 1. 로그인 여부 체크: 세션에 membernum이 있는지 확인
+		int membernum = (int)session.getAttribute("membernum");
+		if(membernum == 0) {
+			return "redirect:/";
+		}
+		
 		// 세션에 저장된 email 값을 가져오기 = 가져올 수 있다는 것은 로그인이 되어있다는 것 = 즉, 수정이 자유로운 상태
 		String email = (String)session.getAttribute("email");
 		MemberVO member = memberService.getMember(email); // 멤버 정보 가져오기
@@ -111,7 +144,14 @@ public class MyInfoMemberController {
 	// 이렇게 해야 유효성 검증에 오류가 생기지 않음
 	@RequestMapping(value="/member/modify", method=RequestMethod.POST)
 	public String modifyMember(@ModelAttribute("member") @Valid MemberVO member, BindingResult bindingResult, 
-							   SessionStatus sessionStatus, Model model) {
+							   SessionStatus sessionStatus, Model model, HttpSession session) {
+		
+		// 1. 로그인 여부 체크: 세션에 membernum이 있는지 확인
+		int membernum = (int)session.getAttribute("membernum");
+		if(membernum == 0) {
+			return "redirect:/";
+		}
+		
 		MemberVO check = memberService.getPhoneMember(member.getPhone());
 		System.out.println("check:" + check);
 		
@@ -135,6 +175,13 @@ public class MyInfoMemberController {
 	// 회원 정보 수정 - 비밀번호 수정
 	@RequestMapping(value="/member/modifyPw")
 	public String modifyPwMember(HttpSession session, Model model) {
+		
+		// 1. 로그인 여부 체크: 세션에 membernum이 있는지 확인
+		int membernum = (int)session.getAttribute("membernum");
+		if(membernum == 0) {
+			return "redirect:/";
+		}
+		
 		String email = (String)session.getAttribute("email");
 		MemberVO member = memberService.getMember(email);
 		model.addAttribute("member", member);
@@ -144,7 +191,13 @@ public class MyInfoMemberController {
 	
 	@RequestMapping(value="/member/modifyPw", method=RequestMethod.POST)
 	public String modifyPwMember(@ModelAttribute("changePwCmd") @Valid ChangePwCommand changePwCmd, 
-								 BindingResult bindingResult, MemberVO member, Model model) {
+								 BindingResult bindingResult, MemberVO member, Model model, HttpSession session) {
+		
+		// 1. 로그인 여부 체크: 세션에 membernum이 있는지 확인
+		int membernum = (int)session.getAttribute("membernum");
+		if(membernum == 0) {
+			return "redirect:/";
+		}
 		
 		// 1.유효성 검사에서 에러가 발생할 경우
 		if(bindingResult.hasErrors()) {

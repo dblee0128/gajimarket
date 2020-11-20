@@ -55,7 +55,9 @@
 									&amount=<c:out value="${pageMaker.cri.amount}"/>
 									&type=<c:out value="${pageMaker.cri.type}"/>
 									&keyword=<c:out value="${pageMaker.cri.keyword}"/>" class="link">
-									<c:out value="${qna.title}"/></a>
+									<c:out value="${qna.title}"/>
+									<b> [<c:out value="${qna.replycnt}"/>]</b>
+						</a>
 					</td>
 					<td>${qna.member.nickname}</td>
 					<td class="medium"><fmt:formatDate pattern="yyyy-MM-dd" value="${qna.regdate}"/></td>

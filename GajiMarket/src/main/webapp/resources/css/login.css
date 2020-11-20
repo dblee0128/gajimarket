@@ -82,7 +82,7 @@ html, body {
 .errors {
 	color: #8dacdf;
 	font-size: small;
-	text-align: center;
+	text-align: left;
 }
 
 #wrap .footerArea {

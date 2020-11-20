@@ -32,7 +32,7 @@
 				<tr>
 					<td class="medium">${qna.type.typename}</td>
 					<td>
-						<a href="qna/${qna.qnanum}" class="link">${qna.title}</a>
+						<a href="qna/${qna.qnanum}" class="link">${qna.title}<b> [<c:out value="${qna.replycnt}"/>]</b></a>
 					</td>
 					<td class="medium"><fmt:formatDate pattern="yyyy-MM-dd" value="${qna.regdate}"/></td>
 				</tr>

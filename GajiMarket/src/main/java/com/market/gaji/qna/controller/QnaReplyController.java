@@ -26,9 +26,9 @@ public class QnaReplyController {
 	// 댓글 등록
 	@RequestMapping(value="/new", 
 					method=RequestMethod.POST,
-					consumes = "application/json", 
-					produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<String> registerQnaReply(@RequestBody QnaReplyVO qnareplyVo) {
+					consumes = "application/json", // json 데이터만
+					produces = { MediaType.TEXT_PLAIN_VALUE }) // json 데이터만
+	public ResponseEntity<String> registerQnaReply(@RequestBody QnaReplyVO qnareplyVo) { // json 데이터를 QnaReplyVO 타입으로 변환
 		
 		int insertCount = qnaReplyService.registerQnaReply(qnareplyVo);
 		
@@ -80,7 +80,8 @@ public class QnaReplyController {
 					produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> modifyQnaReply(@RequestBody QnaReplyVO qnareplyVo, @PathVariable("qnareplynum") int qnareplynum) {
 		
-		qnareplyVo.setQnareplynum(qnareplynum);
+		qnareplyVo.setQnareplynum(qnareplynum); // 전달받은 댓글 번호를 저장해주기
+		
 		int updateCount = qnaReplyService.modifyQnaReply(qnareplyVo);
 		if(updateCount == 1) {
 			return new ResponseEntity<>("success", HttpStatus.OK);

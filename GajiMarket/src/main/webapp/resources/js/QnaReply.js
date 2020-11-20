@@ -37,11 +37,11 @@ var replyService = (function(){
 			});
 	}
 	
-	function remove(replynum, callback, error) {
-		console.log(replynum);
+	function remove(qnareplynum, callback, error) {
+		console.log(qnareplynum);
 		$.ajax({
 			type: 'delete',
-			url: '/reply/' + replynum,
+			url: '/qnaReply/' + qnareplynum,
 			success: function(deleteResult, status, xhr) {
 				if(callback) {
 					callback(deleteResult);
@@ -61,7 +61,7 @@ var replyService = (function(){
 		
 		$.ajax({
 			type: 'put',
-			url: '/reply/' + reply.replynum,
+			url: '/qnaReply/' + reply.replynum,
 			data: JSON.stringify(reply),
 			contentType: "application/json; charset=utf-8",
 			success: function(result, status, xhr) {
@@ -78,8 +78,8 @@ var replyService = (function(){
 		});
 	}
 	
-	function get(qnareplynum, callback, error) {
-		$.get("/qnaReply/" + qnareplynum + ".json", function(result) {
+	function get(replynum, callback, error) {
+		$.get("/reply/" + replynum + ".json", function(result) {
 			
 			if(callback) {
 				callback(result);

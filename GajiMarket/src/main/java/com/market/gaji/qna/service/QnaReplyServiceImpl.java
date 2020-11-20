@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.market.gaji.qna.domain.QnaReplyVO;
+import com.market.gaji.qna.mapper.QnaMapper;
 import com.market.gaji.qna.mapper.QnaReplyMapper;
 
 @Service
@@ -13,9 +15,14 @@ public class QnaReplyServiceImpl implements QnaReplyService {
 	
 	@Autowired
 	private QnaReplyMapper qnaReplyMapper;
+	
+	@Autowired
+	private QnaMapper qnaMapper;
 
+	@Transactional
 	@Override
 	public int registerQnaReply(QnaReplyVO qnareplyVo) {
+		qnaMapper.updateReplyCnt(qnareplyVo.getQnanum(), 1);
 		return qnaReplyMapper.registerQnaReply(qnareplyVo);
 	}
 
@@ -29,8 +36,11 @@ public class QnaReplyServiceImpl implements QnaReplyService {
 		return qnaReplyMapper.getListQnaReply(qnanum);
 	}
 
+	@Transactional
 	@Override
 	public int deleteQnaReply(int qnareplynum) {
+		QnaReplyVO vo = qnaReplyMapper.getQnaReply(qnareplynum);
+		qnaMapper.updateReplyCnt(vo.getQnanum(), -1);
 		return qnaReplyMapper.deleteQnaReply(qnareplynum);
 	}
 

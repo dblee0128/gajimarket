@@ -80,6 +80,10 @@ public class NoticeController {
 	@RequestMapping(value="/register")
 	public String registerNotice(HttpSession session, Model model) {
 		
+		// 1. 관리자 로그인 여부 확인 : isadmin이 0이면 돌려보내라
+		int isadmin = (int)session.getAttribute("isadmin");
+		if(isadmin == 0) { return "redirect:/"; }
+		
 		// 1. 로그인 여부 체크: 세션에 email이 있는지 확인
 		String email = (String)session.getAttribute("email");
 		if(email == null) { return "redirect:/"; }
@@ -112,6 +116,10 @@ public class NoticeController {
 	@RequestMapping(value="/delete/{noticenum}")
 	public String deleteNotice(@PathVariable int noticenum, HttpSession session, Model model) {
 		
+		// 1. 관리자 로그인 여부 확인 : isadmin이 0이면 돌려보내라
+		int isadmin = (int)session.getAttribute("isadmin");
+		if(isadmin == 0) { return "redirect:/"; }
+		
 		// 1. 로그인 여부 체크: 세션에 email이 있는지 확인
 		String email = (String)session.getAttribute("email");
 		if(email == null) { return "redirect:/"; }
@@ -136,6 +144,10 @@ public class NoticeController {
 	@RequestMapping(value="/modify/{noticenum}")
 	public String modifyNotice(@ModelAttribute("cri") Criteria cri, @PathVariable("noticenum") int noticenum, 
 							   HttpSession session, Model model) {
+		
+		// 1. 관리자 로그인 여부 확인 : isadmin이 0이면 돌려보내라
+		int isadmin = (int)session.getAttribute("isadmin");
+		if(isadmin == 0) { return "redirect:/"; }
 		
 		// 1. 로그인 여부 체크: 세션에 email이 있는지 확인
 		String email = (String)session.getAttribute("email");

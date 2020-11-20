@@ -45,6 +45,12 @@
 		where membernum = #{membernum}
 	</delete>
 	
+	<!-- 댓글 삭제 -->
+	<delete id="removeQnaReplyQnanum" parameterType="int">
+		delete from tbl_qna_reply
+		where qnanum = #{qnanum}
+	</delete>
+	
 	<resultMap type="QnaReplyVO" id="qnaReply">
 		<id column="qnareplynum" property="qnareplynum"/>
 		<result column="qnareply" property="qnareply"/>

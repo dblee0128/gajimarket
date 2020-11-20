@@ -35,16 +35,19 @@ public class FindController {
 	
 	@RequestMapping(value="/findEmail", method=RequestMethod.POST)
 	public String findEmailMember(String phone, Model model) {
+		
 		MemberVO member = memberService.getPhoneMember(phone);
 		
-		if(member.getPhone() == null) {
+		if(member == null) {
 			model.addAttribute("msg1", "일치하는 회원 정보가 없습니다.");
 			return "login/findEmail";
 		}
+		
 		model.addAttribute("msg2", "가입하신 이메일은 ");
 		model.addAttribute("email", member.getEmail());
 		model.addAttribute("msg3", " 입니다.");
-		return "login/findEmail";
+		return "login/findEmail"; 
+		
 	}
 	
 

@@ -25,6 +25,8 @@ public class QnaVO {
 	private int typenum;
 	private int membernum;
 	
+	private int replycnt;
+	
 	private QnaTypeVO type;
 	private MemberVO member;
 	
@@ -76,10 +78,17 @@ public class QnaVO {
 	public void setMember(MemberVO member) {
 		this.member = member;
 	}
+	public int getReplycnt() {
+		return replycnt;
+	}
+	public void setReplycnt(int replycnt) {
+		this.replycnt = replycnt;
+	}
 	@Override
 	public String toString() {
 		return "QnaVO [qnanum=" + qnanum + ", title=" + title + ", content=" + content + ", regdate=" + regdate
-				+ ", typenum=" + typenum + ", membernum=" + membernum + ", type=" + type + ", member=" + member + "]";
+				+ ", typenum=" + typenum + ", membernum=" + membernum + ", replycnt=" + replycnt + ", type=" + type
+				+ ", member=" + member + "]";
 	}
 
 }

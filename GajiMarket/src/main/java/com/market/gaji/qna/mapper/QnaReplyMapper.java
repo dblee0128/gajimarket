@@ -21,7 +21,10 @@ public interface QnaReplyMapper {
 	// 댓글 수정
 	public int modifyQnaReply(QnaReplyVO qnareplyVo);
 	
-	// Qna 댓글 삭제 : 회원번호
+	// 댓글 삭제 : 회원번호룰 받아서
 	public void removeQnaReplyMem(int membernum);
+	
+	// 댓글 삭제 : 문의번호를 받아서
+	public void removeQnaReplyQnanum(int qnanum);
 
 }

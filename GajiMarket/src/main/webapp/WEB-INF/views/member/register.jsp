@@ -10,6 +10,9 @@
 <title>가지마켓</title>
 <link href="<c:url value="/resources/css/member.css"/>" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+<style>
+.errors {text-align: left;}
+</style>
 </head>
 <body>
 <div id="wrap">

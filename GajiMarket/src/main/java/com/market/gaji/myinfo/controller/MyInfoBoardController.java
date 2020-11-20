@@ -1,4 +1,4 @@
-package com.market.gaji.board.controller;
+package com.market.gaji.myinfo.controller;
 
 import java.util.List;
 

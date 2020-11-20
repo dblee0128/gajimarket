@@ -44,6 +44,11 @@
 				/WEB-INF/spring/security-context.xml
 			</param-value>
 		</init-param>
+		<!-- 404 에러 처리 -->
+		<init-param>
+			<param-name>throwExceptionIfNoHandlerFound</param-name>
+			<param-value>true</param-value>
+		</init-param>
 		<load-on-startup>1</load-on-startup>
 		
 		<!-- 업로드 설정 추가 -->

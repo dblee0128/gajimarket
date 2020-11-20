@@ -2,6 +2,8 @@ package com.market.gaji.qna.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.market.gaji.board.domain.Criteria;
 import com.market.gaji.qna.domain.QnaVO;
 
@@ -36,5 +38,8 @@ public interface QnaMapper {
 	
 	// 문의 삭제 - 회원번호
 	public void removeQnaMem(int membernum);
+	
+	// 댓글 수
+	public void updateReplyCnt(@Param("qnanum") int qnanum, @Param("amount") int amount);
 
 }

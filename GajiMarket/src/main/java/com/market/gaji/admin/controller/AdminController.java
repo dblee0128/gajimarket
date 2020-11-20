@@ -54,6 +54,9 @@ public class AdminController {
 		int isadmin = (int)session.getAttribute("isadmin");
 		if(isadmin == 0) { return "redirect:/"; }
 		
+		String email = (String)session.getAttribute("email");
+		if(email == null) { return "redirect:/"; }
+		
 		model.addAttribute("memberCnt", memberService.getCountMember()); // 전체 회원 수
 		model.addAttribute("adminCnt", memberService.getCountAdmin()); // 전체 관리자 수
 		model.addAttribute("boardCnt", boardService.getCountBoard()); // 전체 게시글 수

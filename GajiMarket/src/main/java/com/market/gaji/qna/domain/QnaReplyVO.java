@@ -6,11 +6,12 @@ import com.market.gaji.member.domain.MemberVO;
 
 public class QnaReplyVO {
 	
-	private int qnareplynum;
-	private String qnareply;
-	private Date regdate;
-	private int qnanum;
-	private int membernum;
+	private int qnareplynum; // 댓글번호
+	private String qnareply; // 댓글내용
+	private Date regdate; // 작성일자
+	
+	private int qnanum; // 문의글번호
+	private int membernum; // 회원번호
 	
 	private MemberVO member;
 
