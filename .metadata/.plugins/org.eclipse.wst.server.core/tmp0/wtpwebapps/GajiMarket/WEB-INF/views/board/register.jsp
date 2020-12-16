@@ -183,7 +183,7 @@ $(document).ready(function(e){
 	});
 	
 	// 파일 업로드 관련
-	var regex = new RegExp("(.*?)\.(jpg|jpeg|png)$"); // 이미지 확장자만 가능
+	var regex = new RegExp("(.*?)\.(jpg|jpeg|png|JPG|JPEG|PNG)$"); // 이미지 확장자만 가능
 	var maxSize = 5242880; // 5MB
 	
 	function checkFile(fileName, fileSize) {

@@ -7,14 +7,13 @@ public class EmailVO {
 	private String content; // 내용
 	private String receiver; // 받는사람
 	
-	
-	
 	public EmailVO(String subject, String content, String receiver) {
 		super();
 		this.subject = subject;
 		this.content = content;
 		this.receiver = receiver;
 	}
+	
 	public String getSubject() {
 		return subject;
 	}

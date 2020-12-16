@@ -54,6 +54,7 @@ public class AdminController {
 		int isadmin = (int)session.getAttribute("isadmin");
 		if(isadmin == 0) { return "redirect:/"; }
 		
+		// 2. 세션에 email 값이 없을 때 = 비회원
 		String email = (String)session.getAttribute("email");
 		if(email == null) { return "redirect:/"; }
 		
@@ -68,7 +69,7 @@ public class AdminController {
 	
 	
 	// 회원 관리 
-	// 전체 회원 조회 (일반)
+	// 전체 회원 조회
 	@RequestMapping(value="/admin/member")
 	public String getListMember(Criteria cri, HttpSession session, Model model) {
 		
@@ -147,8 +148,8 @@ public class AdminController {
 	public String getAllBoardAdmin(Criteria cri, HttpSession session, Model model) {
 		
 		// 1. 관리자 로그인 여부 확인 : isadmin이 0이면 돌려보내라
-		int check = (int)session.getAttribute("isadmin");
-		if(check == 0) { return "redirect:/"; }
+		int isadmin = (int)session.getAttribute("isadmin");
+		if(isadmin == 0) { return "redirect:/"; }
 		
 		// 2. 게시판 전체 목록 가져오기
 		List<BoardVO> board = boardService.getAllBoard(cri);
@@ -159,13 +160,12 @@ public class AdminController {
 		
 		return "admin/board/get";
 		
-		// get.jsp에 주소별 검색 기능 추가하기
 	}
 	
 	// 상세 게시글 보기
-	@RequestMapping(value="admin/board/{boardnum}")
+	@RequestMapping(value="/admin/board/{boardnum}")
 	public String getDetailBoard(HttpSession session, @ModelAttribute("boardnum") @PathVariable int boardnum,
-								 @ModelAttribute("cri") Criteria cri, Model model) { // cri 추가
+								 @ModelAttribute("cri") Criteria cri, Model model) {
 		
 		// 1. 관리자 로그인 여부 확인 : isadmin이 0이면 돌려보내라
 		int isadmin = (int)session.getAttribute("isadmin");
@@ -183,10 +183,8 @@ public class AdminController {
 		LikeVO likevo = new LikeVO();
 		likevo.setBoardnum(boardnum);
 		likevo.setMembernum((int)session.getAttribute("membernum"));
-		System.out.println("likevo: " + likevo); // OK
 		
 		int likeCheck = likeService.getLikeOrDisLike(likevo); // 좋아요 했냐 안했냐? 좋아요한 개수가 담김
-		System.out.println("likeCheck: " + likeCheck);
 		
 		if(likeCheck == 1) { // 좋아요 했으면
 			model.addAttribute("likeCheck", likeCheck);
@@ -202,19 +200,15 @@ public class AdminController {
 	}
 	
 	// 게시물 삭제
-	@RequestMapping(value="admin/board/delete/{boardnum}")
+	@RequestMapping(value="/admin/board/delete/{boardnum}")
 	public String deleteBoard(@PathVariable int boardnum, Criteria cri, HttpSession session, Model model) {
 		
 		// 1. 관리자 로그인 여부 확인 : isadmin이 0이면 돌려보내라
 		int isadmin = (int)session.getAttribute("isadmin");
 		if(isadmin == 0) { return "redirect:/"; }
 		model.addAttribute("isadmin", isadmin);
-			
-		//BoardVO board = boardService.getDetailBoard(boardnum);
-		//int membernum = (int)session.getAttribute("membernum");
-		//model.addAttribute("membernum", membernum);
 		
-		// 3. 이미지 전체 목록 가져온 후 삭제
+		// 2. 이미지 전체 목록 가져온 후 삭제
 		List<ImgVO> imgList = boardService.getImg(boardnum);
 		boardService.deleteBoard(boardnum);
 		deleteImgs(imgList); 
@@ -233,7 +227,7 @@ public class AdminController {
 				Files.deleteIfExists(file); // 원본 이미지 삭제
 				
 				Path thumbNail = Paths.get("/Users/dabin/upload/temp/" + img.getUploadpath() + "/s_" + img.getUuid() + "_" + img.getFilename());
-				Files.delete(thumbNail);
+				Files.delete(thumbNail); // 썸네일 삭제
 			} catch(Exception e) {
 				e.getMessage();
 			}

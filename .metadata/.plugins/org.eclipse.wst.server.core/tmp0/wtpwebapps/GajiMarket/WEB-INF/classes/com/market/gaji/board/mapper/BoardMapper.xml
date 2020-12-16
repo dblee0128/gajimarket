@@ -76,7 +76,7 @@
 	
 	<!-- 내가 쓴 게시물 조회 -->
 	<select id="getListMyBoard" parameterType="int" resultMap="board">
-		select a.boardnum, a.title, a.price, a.sell, a.readcnt, a.regdate, a.likecnt, b.nickname, b.membernum
+		select a.boardnum, a.title, a.price, a.sell, a.readcnt, a.regdate, a.likecnt, a.replycnt, b.nickname, b.membernum
 		from tbl_board a join tbl_member b
 		on a.membernum = b.membernum
 		where b.membernum = #{membernum}
@@ -84,11 +84,11 @@
 	</select>
 	<select id="getListPagingMyBoard" parameterType="map" resultMap="board">
 		<![CDATA[
-		select boardnum, title, price, sell, readcnt, likecnt, regdate, nickname, membernum
+		select boardnum, title, price, sell, readcnt, likecnt, replycnt, regdate, nickname, membernum
 		from(
-			select rownum rn, boardnum, title, price, sell, readcnt, likecnt, regdate, nickname, membernum
+			select rownum rn, boardnum, title, price, sell, readcnt, likecnt, replycnt, regdate, nickname, membernum
 			from(
-				select a.boardnum, a.title, a.price, a.sell, a.readcnt, a.likecnt, a.regdate, b.nickname, b.membernum
+				select a.boardnum, a.title, a.price, a.sell, a.readcnt, a.likecnt, a.replycnt, a.regdate, b.nickname, b.membernum
 				from tbl_board a join tbl_member b
 				on a.membernum = b.membernum
 				where b.membernum = #{membernum}
@@ -100,7 +100,7 @@
 	<select id="getTotalCountMyBoard" parameterType="map" resultType="int">
 		SELECT count(*)	
 		from(
-			select a.boardnum, a.title, a.price, a.sell, a.readcnt, a.regdate, b.nickname, b.membernum
+			select a.boardnum, a.title, a.price, a.sell, a.readcnt, a.replycnt, a.regdate, b.nickname, b.membernum
 			from tbl_board a join tbl_member b
 			on a.membernum = b.membernum
 			where b.membernum = #{membernum})

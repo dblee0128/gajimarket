@@ -27,6 +27,7 @@
 			<p>* 이메일, 닉네임은 수정할 수 없습니다.</p>
 			
 			<form:form action="modify" method="post" modelAttribute="member">
+				<input type="hidden" name="membernum" value="${membernum}">
 				<table class="membertb">
 					<tr>
 						<td class="title">이메일</td>

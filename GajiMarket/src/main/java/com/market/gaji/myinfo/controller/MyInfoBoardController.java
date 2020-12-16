@@ -88,13 +88,5 @@ public class MyInfoBoardController {
 		return "myInfo/board/getLike";
 	}
 	
-	
-	
-	
-	
-	
-	
 
-	
-	
 }

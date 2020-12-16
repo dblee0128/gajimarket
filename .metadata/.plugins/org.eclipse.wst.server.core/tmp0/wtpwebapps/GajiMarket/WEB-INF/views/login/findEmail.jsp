@@ -35,12 +35,15 @@
 							<input type="text" name="phone" placeholder="핸드폰 번호" class="memberInput">
 						</td>
 					</tr>
-					<tr><td class="errors">${msg1}</td></tr>
-					<tr><td class="errors">${msg2} ${email} ${msg3}</td></tr>
+					<tr><td class="errors" style="text-align: center;">${msg1}</td></tr>
+					<tr><td class="errors" style="text-align: center;">${msg2} ${email} ${msg3}</td></tr>
 				</table>
 				
 				<div class="writeBtnArea">
 					<button type="submit" class="bigBtn">이메일 찾기</button>
+					<a href="/" class="link" style="font-size: small;">로그인</a> 
+					&nbsp;&nbsp;&nbsp;
+					<a href="/member/register" class="link" style="font-size: small;">회원가입</a>
 				</div>
 			</form>
 			

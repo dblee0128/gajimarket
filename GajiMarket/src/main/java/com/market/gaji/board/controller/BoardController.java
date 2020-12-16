@@ -76,7 +76,7 @@ public class BoardController {
 	// 게시물 상세 조회
 	@RequestMapping(value="/{boardnum}")
 	public String getDetailBoard(HttpSession session, @ModelAttribute("boardnum") @PathVariable int boardnum,
-								 @ModelAttribute("cri") Criteria cri, Model model) { // cri 추가
+								 @ModelAttribute("cri") Criteria cri, Model model) {
 		
 		// 1. 로그인 여부 체크: 세션에 email이 있는지 확인
 		String email = (String)session.getAttribute("email");
@@ -94,10 +94,8 @@ public class BoardController {
 		LikeVO likevo = new LikeVO();
 		likevo.setBoardnum(boardnum);
 		likevo.setMembernum((int)session.getAttribute("membernum"));
-		System.out.println("likevo: " + likevo); // OK
 		
 		int likeCheck = likeService.getLikeOrDisLike(likevo); // 좋아요 했냐 안했냐? 좋아요한 개수가 담김
-		System.out.println("likeCheck: " + likeCheck);
 		
 		if(likeCheck == 1) { // 좋아요 했으면
 			model.addAttribute("likeCheck", likeCheck);
@@ -218,7 +216,7 @@ public class BoardController {
 		
 		// 2. 유효성 검증 + 카테고리 선택 검증
 		if(bindingResult.hasErrors()) {
-			if(board.getCategorynum() == 0) {
+			if(board.getCategorynum() == 0) {	
 				return "/board/modify";
 			} else if(board.getCategorynum() == 0) {
 				model.addAttribute("msg", "카테고리를 선택해주세요.");
@@ -261,7 +259,7 @@ public class BoardController {
 				Files.deleteIfExists(file); // 원본 이미지 삭제
 				
 				Path thumbNail = Paths.get("/Users/dabin/upload/temp/" + img.getUploadpath() + "/s_" + img.getUuid() + "_" + img.getFilename());
-				Files.delete(thumbNail);
+				Files.delete(thumbNail); // 썸네일 삭제
 			} catch(Exception e) {
 				log.error("delete file error: " + e.getMessage());
 			}

@@ -36,8 +36,8 @@
 							<input type="text" name="email" placeholder="이메일" class="memberInput">
 						</td>
 					</tr>
-					<tr><td class="errors">${msg1}</td></tr>
-					<tr><td class="errors">${msg2}</td></tr>
+					<tr><td class="errors" style="text-align: center;">${msg1}</td></tr>
+					<tr><td class="errors" style="text-align: center;">${msg2}</td></tr>
 				</table>
 				
 				<div class="writeBtnArea">

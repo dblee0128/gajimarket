@@ -57,9 +57,10 @@
 			<input type="hidden" name="type" value="<c:out value="${cri.type}"/>">
 		</form>
 		
+	<%@ include file="../includes/footer.jsp"%>	
 	</div>
-	<%@ include file="../includes/footer.jsp"%>		
 </div>
+
 
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.5.1.min.js"/>"></script>
 <script>

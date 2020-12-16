@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.market.gaji.login.domain.EmailVO"/>
 <fullyQualifiedTypeName name="javax.mail.internet.MimeMessage"/>
 <fullyQualifiedTypeName name="javax.mail.internet.MimeMessage.RecipientType"/>
 <fullyQualifiedTypeName name="javax.mail.internet.InternetAddress"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="org.springframework.web.servlet.NoHandlerFoundException"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseStatus"/>
 <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
+<fullyQualifiedTypeName name="org.springframework.validation.ObjectError"/>
 </qualifiedTypeNameHistroy>

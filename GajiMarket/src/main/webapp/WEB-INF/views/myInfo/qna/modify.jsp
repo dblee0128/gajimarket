@@ -29,7 +29,7 @@
 			   * 상담 시간 | 평일 10:00 - 17:00</p>
 			   
 			<form:form action="${qna.qnanum}" method="post" modelAttribute="qna">
-				<input type="hidden" name="membernum" value="${qna.member.membernum}">
+				<input type="hidden" name="membernum" value="${membernum}">
 				<input type="hidden" name="boardnum" value="${qna.qnanum}">
 			
 				<table class="writetb">

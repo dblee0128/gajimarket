@@ -25,7 +25,7 @@
 		<!-- 글 출력 영역 -->
 		<div class="writeArea">
 			<form:form action="${notice.noticenum}" method="post" modelAttribute="notice">
-				<input type="hidden" name="membernum" value="${member.membernum}">
+				<input type="hidden" name="membernum" value="${membernum}">
 				<input type="hidden" name="noticenum" value="${notice.noticenum}">
 			
 				<table class="writetb">

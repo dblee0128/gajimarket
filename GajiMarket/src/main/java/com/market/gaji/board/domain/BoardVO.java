@@ -14,7 +14,7 @@ public class BoardVO {
 	private int boardnum;
 	
 	@NotEmpty(message = "제목을 입력해주세요.")
-	@Size(min=1, max=15, message="1-15자 이내로 입력해주세요.")
+	@Size(min=1, max=100, message="1-50자 이내로 입력해주세요.")
 	private String title;
 	
 	@NotEmpty(message = "가격을 입력해주세요.")
