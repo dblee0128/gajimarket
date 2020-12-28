@@ -5,7 +5,7 @@
 인원 : 개인 프로젝트  
 기간 : 2020.10.17 ~ 2020.11.22  
 
-* * *
+<br><br>
 
 __1. 프로젝트 소개__
 
@@ -18,23 +18,27 @@ __1. 프로젝트 소개__
 인천 시민만 이용할 수 있도록 제한을 두어 가까운 인천 지역구/군민들과의 마음 따뜻한 중고 거래,  
 가지마켓 웹 사이트를 제작하였습니다.  
 
+<br>
     
 __2. 상세 내용__
 
 프로젝트 개요, 분석, 설계, 구현, 테스트 내용이 담겨있습니다. 아래 링크를 클릭하여 확인해주세요.
 
-[가지마켓 상세 내용] (https://www.notion.so/fea2d9bb82784f6f8a152d18d18574c3"가지마켓 상세 내용")
+<https://www.notion.so/fea2d9bb82784f6f8a152d18d18574c3>
 
+<br>
      
 __3. 실행 영상__
 
-[가지마켓 실행 영상] (https://www.youtube.com/channel/UCB1MNcINTKQpr5WpTmobPsQ?view_as=subscriber"가지마켓 실행 영상")
+<https://www.youtube.com/channel/UCB1MNcINTKQpr5WpTmobPsQ?view_as=subscriber>
 
+<br>
      
 __4. 전체 소스 코드__
 
-[가지마켓 전체 소스 코드] (https://github.com/dblee0128/gajimarket"가지마켓 전체 소스 코드")
+<https://github.com/dblee0128/gajimarket>
 
+<br>     
      
 __5. 깨달은 점__
 
@@ -45,3 +49,4 @@ __5. 깨달은 점__
 - war 파일을 이용하여 Tomcat으로 배포하였습니다.
 - docker에서 Oracle을 사용하여 기본적인 docker의 사용법을 익혔습니다.
 
+<br><br>
