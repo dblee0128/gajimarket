@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.market.gaji.board.mapper.BoardMapper">
+
+	<!-- 전체 게시물 조회 : 사용자의 주소에 해당하는 게시물 -->
+	<select id="getListBoard" parameterType="int" resultMap="board">
+		select a.boardnum, a.title, a.price, a.sell, a.readcnt, a.regdate, b.nickname, b.membernum
+		from tbl_board a join tbl_member b
+		on a.membernum = b.membernum
+		where b.addressnum = #{addressnum}
+		order by sell desc, regdate desc
+	</select>
+	<select id="getListPagingBoard" parameterType="map" resultMap="board">
+		<![CDATA[
+		select boardnum, title, price, content, sell, readcnt, regdate, replycnt, likecnt, nickname, membernum
+		from(
+			select rownum rn, boardnum, title, price, content, sell, readcnt, regdate, replycnt, likecnt, nickname, membernum
+			from(
+				select rownum rn, a.boardnum, a.title, a.price, a.content, a.sell, a.readcnt, a.regdate, a.replycnt, a.likecnt, 
+				b.nickname, b.membernum
+				from tbl_board a join tbl_member b
+				on a.membernum = b.membernum
+				where b.addressnum = #{addressnum}
+				order by sell desc, boardnum desc)
+			where 
+		]]>	
+		<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
+			<foreach item="type" collection="cri.typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{cri.keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%'||#{cri.keyword}||'%'
+						</when>
+						<when test="type == 'N'.toString()">
+							nickname like '%'||#{cri.keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>	
+		</trim>
+		<![CDATA[
+			rownum <= #{cri.pageNum} * #{cri.amount})
+		where rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
+	</select>
+	<select id="getTotalCountBoard" parameterType="map" resultType="int">
+		SELECT count(*)	
+		from(
+			select a.boardnum, a.title, a.price, a.sell, a.readcnt, a.likecnt, a.regdate, b.nickname, b.membernum
+			from tbl_board a join tbl_member b
+			on a.membernum = b.membernum
+			where
+			<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
+				<foreach item="type" collection="cri.typeArr">
+					<trim prefix="OR">
+						<choose>
+							<when test="type == 'T'.toString()">
+								title like '%'||#{cri.keyword}||'%'
+							</when>
+							<when test="type == 'C'.toString()">
+								content like '%'||#{cri.keyword}||'%'
+							</when>
+							<when test="type == 'N'.toString()">
+								nickname like '%'||#{cri.keyword}||'%'
+							</when>
+						</choose>
+					</trim>
+				</foreach>	
+			</trim>
+			b.addressnum = #{addressnum})
+	</select>
+	
+	<!-- 내가 쓴 게시물 조회 -->
+	<select id="getListMyBoard" parameterType="int" resultMap="board">
+		select a.boardnum, a.title, a.price, a.sell, a.readcnt, a.regdate, a.likecnt, a.replycnt, b.nickname, b.membernum
+		from tbl_board a join tbl_member b
+		on a.membernum = b.membernum
+		where b.membernum = #{membernum}
+		order by sell desc, regdate desc
+	</select>
+	<select id="getListPagingMyBoard" parameterType="map" resultMap="board">
+		<![CDATA[
+		select boardnum, title, price, sell, readcnt, likecnt, replycnt, regdate, nickname, membernum
+		from(
+			select rownum rn, boardnum, title, price, sell, readcnt, likecnt, replycnt, regdate, nickname, membernum
+			from(
+				select a.boardnum, a.title, a.price, a.sell, a.readcnt, a.likecnt, a.replycnt, a.regdate, b.nickname, b.membernum
+				from tbl_board a join tbl_member b
+				on a.membernum = b.membernum
+				where b.membernum = #{membernum}
+				order by sell desc, boardnum desc)
+			where rownum <= #{cri.pageNum} * #{cri.amount})
+		where rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
+	</select>
+	<select id="getTotalCountMyBoard" parameterType="map" resultType="int">
+		SELECT count(*)	
+		from(
+			select a.boardnum, a.title, a.price, a.sell, a.readcnt, a.replycnt, a.regdate, b.nickname, b.membernum
+			from tbl_board a join tbl_member b
+			on a.membernum = b.membernum
+			where b.membernum = #{membernum})
+	</select>
+	
+	<select id="getSellCountMyBoard" parameterType="int" resultType="int">
+		select count(*)
+		from tbl_board
+		where membernum = #{membernum}
+	</select>
+	
+	<select id="getOnSaleCountMyBoard" resultType="int">
+		select count(*)
+		from tbl_board
+		where membernum = #{membernum} and sell = '판매중'
+	</select>
+	
+	<select id="getSalesCompletedCountMyBoard" resultType="int">
+		select count(*)
+		from tbl_board
+		where membernum = #{membernum} and sell = '판매완료'
+	</select>
+	
+	<!-- 게시물 상세 조회 -->
+	<select id="getDetailBoard" parameterType="int" resultMap="board">
+		select a.boardnum, a.title, a.price, a.content, a.sell, a.readcnt, a.likecnt, a.regdate, 
+			   b.categoryname, c.nickname, b.categorynum, c.membernum
+		from tbl_board a
+		join tbl_category b on a.categorynum = b.categorynum
+		join tbl_member c on a.membernum = c.membernum
+		where boardnum = #{boardnum}
+	</select>
+	
+	
+	<!-- 게시물 조회 resultMap -->
+	<resultMap type="BoardVO" id="board">
+		<id column="boardnum" property="boardnum"/>
+		<result column="title" property="title"/>
+		<result column="price" property="price"/>
+		<result column="content" property="content"/>
+		<result column="sell" property="sell"/>
+		<result column="readcnt" property="readcnt"/>
+		<result column="regdate" property="regdate"/>
+		<result column="replycnt" property="replycnt"/>
+		<result column="likecnt" property="likecnt"/>
+		<result column="categorynum" property="categorynum"/>
+		<result column="membernum" property="membernum"/>
+
+		<collection javaType="MemberVO" property="member">
+			<id column="membernum" property="membernum"/>
+			<result column="email" property="email"/>
+			<result column="password" property="password"/>
+			<result column="nickname" property="nickname"/>
+			<result column="phone" property="phone"/>
+			<result column="regdate" property="regdate"/>
+			<result column="addressnum" property="addressnum"/>		
+		</collection>
+		
+		<collection javaType="CategoryVO" property="category">
+			<id column="categorynum" property="categorynum"/>
+			<result column="categoryname" property="categoryname"/>
+		</collection>
+	</resultMap>
+	
+	
+	<!-- 게시물 등록 -->
+	<insert id="registerBoard" parameterType="BoardVO">
+		insert into tbl_board (boardnum, title, price, content, categorynum, membernum)
+		values (board_seq.nextval, #{title}, #{price}, #{content}, #{categorynum}, #{membernum})
+	</insert>
+	
+	<insert id="registerSelectKey" parameterType="BoardVO">
+		<selectKey keyProperty="boardnum" order="BEFORE" resultType="int">
+			select board_seq.nextval from dual
+		</selectKey>
+		insert into tbl_board (boardnum, title, price, content, categorynum, membernum)
+		values (#{boardnum}, #{title}, #{price}, #{content}, #{categorynum}, #{membernum})
+	</insert>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteBoard" parameterType="int">
+		delete
+		from tbl_board
+		where boardnum = #{boardnum}
+	</delete>
+	
+	<!-- 게시글 수정 -->
+	<update id="modifyBoard" parameterType="BoardVO">
+		update tbl_board set
+		title = #{title}, price = #{price}, content = #{content}, sell = #{sell}, categorynum = #{categorynum}
+		where boardnum = #{boardnum}
+	</update>
+	
+	<!-- 조회수 증가 -->
+	<update id="modifyPlusReadCnt" parameterType="int">
+		update tbl_board set
+		readcnt = readcnt + 1
+		where boardnum = #{boardnum}
+	</update>
+	
+	<!-- 댓글 개수 조회 -->
+	<update id="updateReplyCnt">
+		update tbl_board set
+		replycnt = replycnt + #{amount}
+		where boardnum = #{boardnum}
+	</update>
+	
+	<!-- 여기부터 관리자 -->
+	<!-- 모든 게시물 조회 -->
+	<select id="getAllBoard" parameterType="Criteria" resultMap="board">
+	<![CDATA[
+		select boardnum, title, price, content, sell, readcnt, regdate, replycnt, likecnt, nickname, membernum, addressname
+		from(
+			select rownum rn, boardnum, title, price, content, sell, readcnt, regdate, replycnt, likecnt, nickname, membernum, addressname
+			from(
+				select rownum rn, a.boardnum, a.title, a.price, a.content, a.sell, a.readcnt, a.regdate, a.replycnt, a.likecnt, 
+				b.nickname, b.membernum, c.addressname
+				from tbl_board a 
+				join tbl_member b on a.membernum = b.membernum
+				join tbl_address c on b.addressnum = c.addressnum
+				order by sell desc, boardnum desc)
+			where 
+		]]>	
+		<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'N'.toString()">
+							nickname like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'A'.toString()">
+							addressname like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>	
+		</trim>
+		<![CDATA[
+			rownum <= #{pageNum} * #{amount})
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 모든 게시물 수 조회 -->
+	<select id="getAllBoardCount" parameterType="Criteria" resultType="int">
+		SELECT count(*)	
+		from(
+			select a.boardnum, a.title, a.price, a.sell, a.readcnt, a.likecnt, a.regdate, b.nickname, b.membernum, c.addressname
+			from tbl_board a 
+			join tbl_member b on a.membernum = b.membernum
+			join tbl_address c on b.addressnum = c.addressnum)
+			where
+			<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
+				<foreach item="type" collection="typeArr">
+					<trim prefix="OR">
+						<choose>
+							<when test="type == 'T'.toString()">
+								title like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'C'.toString()">
+								content like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'N'.toString()">
+								nickname like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'A'.toString()">
+								addressname like '%'||#{keyword}||'%'
+							</when>
+						</choose>
+					</trim>
+				</foreach>	
+			</trim>
+			boardnum > 0
+	</select>
+
+	<!-- 해당 회원의 게시글 삭제-->
+	<delete id="removeBoardMem" parameterType="int">
+		delete
+		from tbl_board
+		where membernum = #{membernum}
+	</delete>
+	
+	<select id="getCountBoard" resultType="int">
+		select count(*)
+		from tbl_board
+	</select>
+	
+</mapper>

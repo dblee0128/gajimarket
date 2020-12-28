@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.market.gaji.qna.mapper.QnaReplyMapper">
+	
+	<!-- 댓글 등록 -->
+	<insert id="registerQnaReply" parameterType="QnaReplyVO">
+		insert into tbl_qna_reply (qnareplynum, qnareply, qnanum, membernum)
+		values (qnareply_seq.nextval, #{qnareply}, #{qnanum}, #{membernum})
+	</insert>
+	
+	<!-- 하나의 댓글 조회 -->
+	<select id="getQnaReply" parameterType="int" resultMap="qnaReply">
+		select a.qnareplynum, a.qnareply, a.regdate, a.qnanum, a.membernum, b.nickname
+		from tbl_qna_reply a
+		join tbl_member b on a.membernum = b.membernum
+		where qnareplynum = #{qnareplynum}
+	</select>
+	
+	<!-- 전체 댓글 조회 -->
+	<select id="getListQnaReply" parameterType="int" resultMap="qnaReply">
+		select a.qnareplynum, a.qnareply, a.regdate, a.qnanum, a.membernum, b.nickname
+		from tbl_qna_reply a
+		join tbl_member b on a.membernum = b.membernum
+		where a.qnanum = #{qnanum}
+		order by qnareplynum asc
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteQnaReply" parameterType="int">
+		delete from tbl_qna_reply
+		where qnareplynum = #{qnareplynum}
+	</delete>
+	
+	<!-- 댓글 수정 -->
+	<update id="modifyQnaReply" parameterType="QnaReplyVO">
+		update tbl_qna_reply set
+		qnareply = #{qnareply}
+		where qnareplynum = #{qnareplynum}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="removeQnaReplyMem" parameterType="int">
+		delete from tbl_qna_reply
+		where membernum = #{membernum}
+	</delete>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="removeQnaReplyQnanum" parameterType="int">
+		delete from tbl_qna_reply
+		where qnanum = #{qnanum}
+	</delete>
+	
+	<resultMap type="QnaReplyVO" id="qnaReply">
+		<id column="qnareplynum" property="qnareplynum"/>
+		<result column="qnareply" property="qnareply"/>
+		<result column="regdate" property="regdate"/>
+		<result column="qnanum" property="qnanum"/>
+		<result column="membernum" property="membernum"/>
+		
+		<collection javaType="MemberVO" property="member">
+			<id column="membernum" property="membernum"/>
+			<result column="email" property="email"/>
+			<result column="password" property="password"/>
+			<result column="nickname" property="nickname"/>
+			<result column="phone" property="phone"/>
+			<result column="regdate" property="regdate"/>
+			<result column="addressnum" property="addressnum"/>	
+		</collection>
+	</resultMap>
+	
+	
+
+</mapper>

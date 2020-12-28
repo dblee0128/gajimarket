@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.market.gaji.qna.mapper.QnaMapper">
+	
+	<!-- 전체 문의 목록 -->
+	<select id="getQnaList" parameterType="Criteria" resultMap="qna">
+		<![CDATA[
+		select qnanum, title, content, regdate, replycnt, typename, nickname, email
+		from(
+			select rownum rn, qnanum, title, content, regdate, replycnt, typename, nickname, email
+			from(
+				select a.qnanum, a.title, a.content, a.regdate, a.replycnt, b.typename, c.nickname, c.email
+				from tbl_qna a 
+				join tbl_qnatype b on a.typenum = b.typenum 
+				join tbl_member c on a.membernum = c.membernum
+				order by a.qnanum desc
+				)
+			where 
+		]]>	
+		
+		<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'N'.toString()">
+							nickname like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'Q'.toString()">
+							typename like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>	
+		</trim>	
+		
+		<![CDATA[	
+			rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 전체 문의 개수 -->
+	<select id="getCountQnaList" parameterType="Criteria" resultType="int">
+		select count(*)
+		from(
+			select a.qnanum, a.title, a.content, a.regdate, a.replycnt, b.typename, c.nickname, c.email
+			from tbl_qna a 
+			join tbl_qnatype b on a.typenum = b.typenum 
+			join tbl_member c on a.membernum = c.membernum
+		)
+		where
+		<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'N'.toString()">
+							nickname like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'Q'.toString()">
+							typename like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>	
+		</trim>
+		qnanum > 0
+	</select>
+	
+	<select id="getCountQna" resultType="int">
+		select count(*)
+		from tbl_qna
+	</select>
+	
+	
+	<!-- 문의 상세 조회 -->
+	<select id="getDetailQna" parameterType="int" resultMap="qna">
+		select a.qnanum, a.title, a.content, a.regdate, a.typenum, a.membernum, b.typename, c.nickname, c.email
+		from tbl_qna a 
+		join tbl_qnatype b on a.typenum = b.typenum 
+		join tbl_member c on a.membernum = c.membernum
+		where a.qnanum = #{qnanum}
+		order by a.qnanum desc
+	</select>
+	
+	<select id="getCountMyQna" parameterType="int" resultType="int">
+		select count(*)
+		from tbl_qna
+		where membernum = #{membernum}
+	</select>
+	
+	<!-- 문의 등록 -->
+	<insert id="registerQna" parameterType="QnaVO">
+		insert into tbl_qna (qnanum, title, content, typenum, membernum)
+		values (QNA_SEQ.NEXTVAL, #{title}, #{content}, #{typenum}, #{membernum})
+	</insert>
+	
+	<!-- 문의 삭제 -->
+	<delete id="deleteQna" parameterType="int">
+		delete from tbl_qna
+		where qnanum = #{qnanum}
+	</delete>
+	
+	<!-- 문의 수정 -->
+	<update id="modifyQna" parameterType="QnaVO">
+		update tbl_qna set
+		title = #{title}, content = #{content}, typenum = #{typenum}
+		where qnanum = #{qnanum}
+	</update>
+	
+	<!-- 내가 쓴 문의 조회 -->
+	<select id="getMyQnaList" parameterType="int" resultMap="qna">
+		select a.qnanum, a.title, a.content, a.regdate, a.replycnt, b.typename, c.nickname
+		from tbl_qna a 
+		join tbl_qnatype b on a.typenum = b.typenum 
+		join tbl_member c on a.membernum = c.membernum
+		where a.membernum = #{membernum}
+		order by a.qnanum desc
+	</select>
+	
+	<!-- 문의 삭제 : 회원번호 -->
+	<delete id="removeQnaMem" parameterType="int">
+		delete from tbl_qna
+		where membernum = #{membernum}
+	</delete>
+	
+	<update id="updateReplyCnt">
+		update tbl_qna set 
+		replycnt = replycnt + #{amount}
+		where qnanum = #{qnanum}
+	</update>
+	
+	<resultMap type="QnaVO" id="qna">
+		<id column="qnanum" property="qnanum"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="regdate" property="regdate"/>
+		<result column="replycnt" property="replycnt"/>
+		<result column="typenum" property="typenum"/>
+		<result column="membernum" property="membernum"/>
+		
+		<collection javaType="QnaTypeVO" property="type">
+			<id column="typenum" property="typenum"/>
+			<result column="typename" property="typename"/>
+		</collection>
+		
+		<collection javaType="MemberVO" property="member">
+			<id column="membernum" property="membernum"/>
+			<result column="email" property="email"/>
+			<result column="password" property="password"/>
+			<result column="nickname" property="nickname"/>
+			<result column="phone" property="phone"/>
+			<result column="regdate" property="regdate"/>
+			<result column="addressnum" property="addressnum"/>	
+		</collection>
+	</resultMap>
+
+</mapper>
