@@ -1,4 +1,4 @@
-## 가지마켓  
+# 가지마켓  
 
 소개 : 가까운 인천 지역구/군민들과의 중고거래 웹 사이트  
 활동 : KG 아이티뱅크  
@@ -18,28 +18,27 @@ __1. 프로젝트 소개__
 인천 시민만 이용할 수 있도록 제한을 두어 가까운 인천 지역구/군민들과의 마음 따뜻한 중고 거래,  
 가지마켓 웹 사이트를 제작하였습니다.  
 
-  
+    
 __2. 상세 내용__
 
 프로젝트 개요, 분석, 설계, 구현, 테스트 내용이 담겨있습니다. 아래 링크를 클릭하여 확인해주세요.
 
-[가지마켓 상세 내용] (https://www.notion.so/fea2d9bb82784f6f8a152d18d18574c3)
+[가지마켓 상세 내용] (https://www.notion.so/fea2d9bb82784f6f8a152d18d18574c3"가지마켓 상세 내용")
 
-  
+     
 __3. 실행 영상__
 
-[가지마켓 실행 영상] (https://www.youtube.com/channel/UCB1MNcINTKQpr5WpTmobPsQ?view_as=subscriber)
+[가지마켓 실행 영상] (https://www.youtube.com/channel/UCB1MNcINTKQpr5WpTmobPsQ?view_as=subscriber"가지마켓 실행 영상")
 
-  
+     
 __4. 전체 소스 코드__
 
-[가지마켓 전체 소스 코드] (https://github.com/dblee0128/gajimarket)
+[가지마켓 전체 소스 코드] (https://github.com/dblee0128/gajimarket"가지마켓 전체 소스 코드")
 
-  
+     
 __5. 깨달은 점__
 
-- Spring Security를 이용한 비밀번호 암호화, 유효성 검사를 서버 단에서 처리, 
-  mybatis로 SQL Injection에 대비하여 보안에 유리하도록 구현하였습니다.
+- Spring Security를 이용한 비밀번호 암호화, 유효성 검사 서버 단에서 처리, mybatis로 SQL Injection에 대비하여 보안에 유리하도록 구현하였습니다.
 - 댓글, 관심 여부 구현에는 REST API를 활용하여 비동기로 구현하였습니다.
 - 이미지 첨부 구현에는 AJAX를 활용하여 구현하였습니다.
 - 트랜잭션을 적절히 활용하여 안정성 있게 구현하였습니다.
