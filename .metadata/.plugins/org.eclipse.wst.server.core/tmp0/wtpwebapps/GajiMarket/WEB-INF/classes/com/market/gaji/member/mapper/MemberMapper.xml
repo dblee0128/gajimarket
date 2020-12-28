@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.market.gaji.member.mapper.MemberMapper">
+
+	<!-- 회원가입 -->
+	<insert id="registerMember" parameterType="MemberVO">
+		insert into tbl_member
+		(membernum, email, password, nickname, phone, addressnum)
+		values(member_seq.nextval, #{email}, #{password}, #{nickname}, #{phone}, #{addressnum})
+	</insert>
+	
+	<!-- 이메일로 한명의 회원조회 -->
+	<select id="getMember" parameterType="string" resultMap="member">
+		select * 
+		from tbl_member a join tbl_address b
+		on a.addressnum = b.addressnum
+		where email = #{email}
+	</select>
+	
+	<!-- 별명으로 한명의 회원조회 -->
+	<select id="getNicknameMember" parameterType="string" resultMap="member">
+		select * 
+		from tbl_member a join tbl_address b
+		on a.addressnum = b.addressnum
+		where nickname = #{nickname}
+	</select>
+	
+	<!-- 핸드폰 번호로 한명의 회원조회 -->
+	<select id="getPhoneMember" parameterType="string" resultMap="member">
+		select * 
+		from tbl_member a join tbl_address b
+		on a.addressnum = b.addressnum
+		where phone = #{phone}
+	</select>
+	
+	<!-- 회원 번호로 한명의 회원조회 -->
+	<select id="getMemberNumMember" parameterType="int" resultMap="member">
+		select * 
+		from tbl_member a join tbl_address b
+		on a.addressnum = b.addressnum
+		where membernum = #{membernum}
+	</select>
+	
+	<!-- 전체 회원 조회 (관리자) -->
+	<select id="getListMember" parameterType="Criteria" resultMap="member">
+		<![CDATA[
+		select membernum, email, password, nickname, phone, regdate, addressnum, isadmin, addressname
+		from(
+			select rownum rn, membernum, email, password, nickname, phone, regdate, addressnum, isadmin, addressname
+			from(
+				select a.membernum, a.email, a.password, a.nickname, a.phone, a.regdate, a.addressnum, a.isadmin, b.addressname
+				from tbl_member a
+				join tbl_address b on a.addressnum = b.addressnum
+				order by a.isadmin desc, membernum desc
+				)
+			where 
+		]]>
+		<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'E'.toString()">
+							email like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'N'.toString()">
+							nickname like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'A'.toString()">
+							addressname like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'I'.toString()">
+							isadmin like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>	
+		</trim>	
+		<![CDATA[	
+			rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 전체 회원 수 조회 (관리자) -->
+	<select id="getCountAllMember" parameterType="Criteria" resultType="int">
+		select count(*) 
+		from(
+			select a.membernum, a.email, a.password, a.nickname, a.phone, a.regdate, a.addressnum, a.isadmin, b.addressname
+			from tbl_member a
+			join tbl_address b on a.addressnum = b.addressnum
+		)
+		where
+		<trim prefix="(" suffix=") AND " prefixOverrides = "OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'E'.toString()">
+							email like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'N'.toString()">
+							nickname like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'A'.toString()">
+							addressname like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'ISADMIN'.toString()">
+							isadmin like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>	
+		</trim>	
+		membernum > 0
+	</select>
+	
+	<select id="getCountMember" resultType="int">
+		select count(*)
+		from tbl_member
+		where isadmin = 0
+	</select>
+	
+	
+	
+	
+	
+	<select id="getCountAdmin" resultType="int">
+		select count(*)
+		from tbl_member
+		where isadmin = 1
+	</select>
+	
+	<resultMap type="MemberVO" id="member">
+		<id column="membernum" property="membernum"/>
+		<result column="email" property="email"/>
+		<result column="password" property="password"/>
+		<result column="nickname" property="nickname"/>
+		<result column="phone" property="phone"/>
+		<result column="regdate" property="regdate"/>
+		<result column="addressnum" property="addressnum"/>
+		<result column="isadmin" property="isadmin"/>
+		
+		<collection javaType="AddressVO" property="address">
+			<id column="addressnum" property="addressnum"/>
+			<result column="addressname" property="addressname"/>
+		</collection>
+	</resultMap>
+	
+	<!-- 회원탈퇴 -->
+	<delete id="deleteMember">
+		delete
+		from tbl_member 
+		where email = #{email} and password = #{password}
+	</delete>
+	
+	<!-- 회원정보수정 (핸드폰 번호, 주소) -->
+	<update id="modifyMember" parameterType="MemberVO">
+		update tbl_member
+		set phone = #{phone}, addressnum = #{addressnum}
+		where email = #{email}
+	</update>
+	
+	<!-- 회원정보수정 (비밀번호) -->
+	<update id="modifyPwMember">
+		update tbl_member
+		set password = #{password}
+		where email = #{email}
+	</update>
+	
+	<!-- 회원 강제 탈퇴 (관리자) 
+		 회원 탈퇴를 위해서는 tbl_like 삭제, tbl_board 삭제, tbl_member 삭제 순으로 진행 -->
+	<delete id="removeMember" parameterType="int">
+		delete
+		from tbl_member
+		where membernum = #{membernum}
+	</delete>
+	
+	
+	<!-- 회원 <-> 관리자 전환 (관리자)-->
+	<update id="changeAdminOrMember">
+		update tbl_member set
+		isadmin = #{isadmin}
+		where membernum = #{membernum}
+	</update>
+	
+	
+</mapper>
