@@ -1,8 +1,0 @@
-INDEX VERSION 1.4+/Users/dabin/workspace/gajimarket_workspace/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
-600383761.index
-2833372006.index
-794670707.index
-3411728344.index
-2169134965.index
-307110858.index
-1424830541.index
